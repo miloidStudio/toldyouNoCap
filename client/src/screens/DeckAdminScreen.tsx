@@ -34,6 +34,7 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
   const [search, setSearch] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   const [statusFilter, setStatusFilter] = useState<'ALL' | 'ACTIVE' | 'DISABLED'>('ALL');
+  const [sortOrder, setSortOrder] = useState<'DESC' | 'ASC'>('DESC'); // 預設由編號高到低（新到舊）
 
   // 編輯 / 新增彈窗
   const [editingQuestion, setEditingQuestion] = useState<Partial<Question> | null>(null);
@@ -227,9 +228,15 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
     return hasCharOverlap(editingQuestion.term, editingQuestion.hintKeyword);
   }, [editingQuestion?.term, editingQuestion?.hintKeyword]);
 
-  // 篩選出的題目列表
+  // 解析 ID 中的數字以進行自然數排序（如 q-0136 => 136）
+  const parseIdNumber = (id: string): number => {
+    const match = id.match(/\d+/);
+    return match ? parseInt(match[0], 10) : 0;
+  };
+
+  // 篩選出的題目列表（預設以編號高的排到編號低的）
   const filteredQuestions = useMemo(() => {
-    return questions.filter((q) => {
+    const list = questions.filter((q) => {
       // 搜尋關鍵字
       const matchSearch =
         !search ||
@@ -249,7 +256,18 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
 
       return matchSearch && matchCat && matchStatus;
     });
-  }, [questions, search, selectedCategory, statusFilter]);
+
+    return list.sort((a, b) => {
+      const numA = parseIdNumber(a.id);
+      const numB = parseIdNumber(b.id);
+      if (numA !== numB) {
+        return sortOrder === 'DESC' ? numB - numA : numA - numB;
+      }
+      return sortOrder === 'DESC'
+        ? b.id.localeCompare(a.id, undefined, { numeric: true })
+        : a.id.localeCompare(b.id, undefined, { numeric: true });
+    });
+  }, [questions, search, selectedCategory, statusFilter, sortOrder]);
 
   return (
     <div className="mx-auto min-h-screen w-full max-w-6xl px-4 py-8 text-slate-100">
@@ -373,32 +391,47 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
             )}
           </div>
 
-          {/* 狀態切換 */}
-          <div className="flex items-center rounded-2xl bg-black/30 p-1 ring-1 ring-white/10">
+          {/* 狀態切換與排序 */}
+          <div className="flex flex-wrap items-center gap-2">
+            <div className="flex items-center rounded-2xl bg-black/30 p-1 ring-1 ring-white/10">
+              <button
+                onClick={() => setStatusFilter('ALL')}
+                className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${statusFilter === 'ALL' ? 'bg-white/20 text-white' : 'text-slate-400 hover:text-white'
+                  }`}
+              >
+                全部 ({questions.length})
+              </button>
+              <button
+                onClick={() => setStatusFilter('ACTIVE')}
+                className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${statusFilter === 'ACTIVE'
+                    ? 'bg-emerald-500/30 text-emerald-300 ring-1 ring-emerald-500/50'
+                    : 'text-slate-400 hover:text-white'
+                  }`}
+              >
+                僅啟用 ({questions.filter((q) => q.verified).length})
+              </button>
+              <button
+                onClick={() => setStatusFilter('DISABLED')}
+                className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${statusFilter === 'DISABLED'
+                    ? 'bg-slate-700 text-slate-200'
+                    : 'text-slate-400 hover:text-white'
+                  }`}
+              >
+                僅停用 ({questions.filter((q) => !q.verified).length})
+              </button>
+            </div>
+
+            {/* 編號高至低排序切換按鈕 */}
             <button
-              onClick={() => setStatusFilter('ALL')}
-              className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${statusFilter === 'ALL' ? 'bg-white/20 text-white' : 'text-slate-400 hover:text-white'
-                }`}
+              type="button"
+              onClick={() => setSortOrder((prev) => (prev === 'DESC' ? 'ASC' : 'DESC'))}
+              className="flex items-center gap-1.5 rounded-2xl bg-black/30 px-3.5 py-2 text-xs font-bold text-slate-300 ring-1 ring-white/10 transition hover:bg-white/10 hover:text-white active:translate-y-px"
+              title="點擊切換編號排序"
             >
-              全部 ({questions.length})
-            </button>
-            <button
-              onClick={() => setStatusFilter('ACTIVE')}
-              className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${statusFilter === 'ACTIVE'
-                  ? 'bg-emerald-500/30 text-emerald-300 ring-1 ring-emerald-500/50'
-                  : 'text-slate-400 hover:text-white'
-                }`}
-            >
-              僅啟用 ({questions.filter((q) => q.verified).length})
-            </button>
-            <button
-              onClick={() => setStatusFilter('DISABLED')}
-              className={`rounded-xl px-3.5 py-1.5 text-xs font-bold transition ${statusFilter === 'DISABLED'
-                  ? 'bg-slate-700 text-slate-200'
-                  : 'text-slate-400 hover:text-white'
-                }`}
-            >
-              僅停用 ({questions.filter((q) => !q.verified).length})
+              <span>編號：</span>
+              <span className="text-amber-300">
+                {sortOrder === 'DESC' ? '高到低 ⬇' : '低到高 ⬆'}
+              </span>
             </button>
           </div>
         </div>

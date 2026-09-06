@@ -1,0 +1,113 @@
+@import 'tailwindcss';
+
+/* ---------------------------------------------------------------------------
+   全域樣式：深色主題、mobile-first、避免面對面遊玩時誤觸與誤看
+--------------------------------------------------------------------------- */
+
+@theme {
+  /* 底色：偏冷的深藍灰，長時間看不刺眼 */
+  --color-base-900: #0b1020;
+  --color-base-800: #121a30;
+  --color-base-700: #1b2540;
+  --color-base-600: #2a3557;
+  --color-line: #33406b;
+
+  /* 主色：暖琥珀。整個介面只用這一個強調色，畫面才不會花 */
+  --color-brand-300: #fcd34d;
+  --color-brand-400: #fbbf24;
+  --color-brand-500: #f59e0b;
+
+  /* 猜題者：唯一需要跟其他人區分的顏色 */
+  --color-guess-300: #7dd3fc;
+  --color-guess-400: #38bdf8;
+  --color-guess-500: #0ea5e9;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: #eef2ff;
+  background-color: #0b1020;
+  /* 兩顆極淡的光暈，讓純深色不會太平 */
+  background-image:
+    radial-gradient(1000px 620px at 12% -12%, rgba(245, 158, 11, 0.16), transparent 62%),
+    radial-gradient(820px 560px at 92% 4%, rgba(56, 189, 248, 0.12), transparent 58%);
+  background-attachment: fixed;
+  font-family:
+    'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', system-ui, -apple-system, sans-serif;
+  /* 手勢操作時不要選取到文字（身分卡是按住查看） */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+input,
+textarea,
+select {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+/* 倒數計時器與分數用等寬數字，避免數字跳動 */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* 玻璃卡片 */
+.glass {
+  background: linear-gradient(180deg, rgba(27, 37, 64, 0.82), rgba(18, 26, 48, 0.78));
+  border: 1px solid rgba(120, 140, 200, 0.18);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.05) inset,
+    0 16px 40px -24px rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(10px);
+}
+
+/* 標題用的細字距大寫小標 */
+.eyebrow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: #94a3c7;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.42);
+  }
+  100% {
+    box-shadow: 0 0 0 20px rgba(245, 158, 11, 0);
+  }
+}
+
+.pulse-ring {
+  animation: pulse-ring 1.6s cubic-bezier(0.3, 0, 0.2, 1) infinite;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 0.28s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse-ring,
+  .rise {
+    animation: none;
+  }
+}

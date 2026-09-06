@@ -1,0 +1,30 @@
+{
+  "name": "nocap",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NoCap — 面對面派對遊戲的多裝置輔助工具",
+  "workspaces": [
+    "server",
+    "client",
+    "deckbuilder"
+  ],
+  "scripts": {
+    "dev": "concurrently -n 後端,前端 -c blue,magenta \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:server": "npm run dev --workspace server",
+    "dev:client": "npm run dev --workspace client",
+    "build": "npm run build --workspace client",
+    "start": "npm run start --workspace server",
+    "test": "npm run test --workspace server && npm run test --workspace deckbuilder",
+    "typecheck": "npm run typecheck --workspace server && npm run typecheck --workspace client && npm run typecheck --workspace deckbuilder",
+    "deck:build": "npm run build-deck --workspace deckbuilder --",
+    "deck:review": "npm run review --workspace deckbuilder --",
+    "deck:audit": "npm run audit --workspace deckbuilder --"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "name": "NoCap",
+  "short_name": "NoCap",
+  "description": "面對面聚會用的話術推理派對遊戲",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "orientation": "portrait",
+  "lang": "zh-Hant",
+  "icons": []
+}

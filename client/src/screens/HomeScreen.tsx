@@ -127,19 +127,6 @@ export function HomeScreen({
         </div>
       </details>
 
-      <div className="pt-2 text-center">
-        <button
-          type="button"
-          onClick={onOpenAdmin}
-          className="inline-flex items-center gap-2 rounded-2xl bg-white/5 px-5 py-3 text-sm font-bold text-amber-300 ring-1 ring-white/10 transition hover:bg-white/10 hover:ring-amber-400/30 active:translate-y-px"
-        >
-          <span>📚</span>
-          <span>題庫管理中心 (Deck Admin)</span>
-          <span className="rounded-full bg-amber-400/20 px-2 py-0.5 text-xs text-amber-200">
-            管理與 AI 產題 ↗
-          </span>
-        </button>
-      </div>
     </Screen>
   );
 }

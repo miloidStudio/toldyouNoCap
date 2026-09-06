@@ -201,6 +201,10 @@ export function useGame() {
   );
   const startGame = useCallback(() => run(() => emitWithAck('game:start')), [run]);
   const advancePhase = useCallback(() => run(() => emitWithAck('phase:advance')), [run]);
+  const rerollQuestion = useCallback(
+    () => run(() => emitWithAck('round:rerollQuestion')),
+    [run]
+  );
   const vote = useCallback(
     (targetId: string) => run(() => emitWithAck('game:vote', { targetId })),
     [run]
@@ -264,6 +268,7 @@ export function useGame() {
     kickPlayer,
     startGame,
     advancePhase,
+    rerollQuestion,
     vote,
     taunt,
     abortGame,

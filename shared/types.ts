@@ -192,6 +192,8 @@ export interface ClientToServerEvents {
   'game:start': (ack: (res: AckResult<null>) => void) => void;
   /** 推進目前階段：ROLE_ASSIGN→THINKING 由猜題者按、RESULT→下一輪由猜題者或房主按 */
   'phase:advance': (ack: (res: AckResult<null>) => void) => void;
+  /** 猜題者在看身分卡階段重抽一題（保留目前身分與回合，只更換題目） */
+  'round:rerollQuestion': (ack: (res: AckResult<null>) => void) => void;
   /** 猜題者投票，直接結束該輪 */
   'game:vote': (payload: { targetId: string }, ack: (res: AckResult<null>) => void) => void;
   /** 猜題者嘲諷玩家：「騙肖仔！」 */
@@ -270,4 +272,6 @@ export const INTELLECTUAL_CATEGORIES = [
   '認知科學與深層心理學',
   '語言學與符號學',
   '歷史典故與學術奇聞',
+  '遊戲與動漫設定深度冷知識',
+  '科幻奇幻與次文化世界觀',
 ] as const;

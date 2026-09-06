@@ -27,6 +27,7 @@ import {
   computeScoreDelta,
   createRound,
   generateRoomCode,
+  pickHints,
   pickQuestion,
   takeNextGuesser,
 } from './engine';
@@ -363,6 +364,41 @@ export class GameService {
     await this.store.set(room);
     await this.broadcast(room);
     // 階段改變會影響「老實人還看不看得到定義」，所以每次都要重送身分卡
+    await this.sendPrivateRoles(room);
+  }
+
+  /**
+   * 猜題者重抽題目：
+   * 僅限在 ROLE_ASSIGN（看身分卡階段）執行。
+   * 保留原本的猜題者、老實人與瞎掰人身分，只重抽題目與提示關鍵字。
+   */
+  async rerollQuestion(code: string, guesserId: string): Promise<void> {
+    const room = await this.requireRoom(code);
+    if (room.phase !== 'PLAYING' || !room.currentRound) {
+      throw new GameError('目前沒有進行中的遊戲回合');
+    }
+    const round = room.currentRound;
+    if (round.phase !== 'ROLE_ASSIGN') {
+      throw new GameError('只有在「看身分卡」階段才能重抽題目');
+    }
+    if (round.guesserId !== guesserId) {
+      throw new GameError('只有當前猜題者可以重抽題目');
+    }
+
+    const nextQuestion = pickQuestion(this.deck, room.usedQuestionIds);
+    if (!nextQuestion) {
+      throw new GameError('題庫中已無其他未使用的可用題目');
+    }
+
+    room.usedQuestionIds.push(nextQuestion.id);
+    round.questionId = nextQuestion.id;
+    round.term = nextQuestion.term;
+    round.definition = nextQuestion.definition;
+    round.hints = pickHints(nextQuestion, this.deck);
+
+    this.toastRoom(room, '猜題者已更換題目，請重新查看身分卡！', 'info');
+    await this.store.set(room);
+    await this.broadcast(room);
     await this.sendPrivateRoles(room);
   }
 

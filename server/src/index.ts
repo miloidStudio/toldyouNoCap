@@ -396,6 +396,16 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('round:rerollQuestion', async (ack) => {
+    try {
+      const s = session();
+      await game.rerollQuestion(s.code, s.playerId);
+      ack(ok(null));
+    } catch (e) {
+      ack(fail(e));
+    }
+  });
+
   socket.on('game:vote', async (payload, ack) => {
     try {
       const s = session();

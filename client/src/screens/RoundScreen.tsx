@@ -61,9 +61,8 @@ export function RoundScreen({ game }: { game: GameApi }) {
 function WaitingForGuesser({ guesserName, text }: { guesserName: string; text: string }) {
   return (
     <Card className="text-center" glow="guess">
-      <div className="text-5xl">👀</div>
-      <div className="mt-3 text-xl font-black text-sky-300">{guesserName}</div>
-      <p className="mt-1.5 text-sm leading-relaxed text-slate-400">{text}</p>
+      <div className="eyebrow">本輪的猜題者</div>
+      <div className="mt-1.5 text-2xl font-black text-sky-300">{guesserName}</div>
     </Card>
   );
 }
@@ -72,26 +71,39 @@ function RoleAssign({ game, guesserName }: { game: GameApi; guesserName: string 
   const round = game.room!.round!;
   return (
     <>
-      {game.privateRole && <RoleCard info={game.privateRole} phase={round.phase} />}
-
       {game.isGuesser ? (
-        <>
-          <p className="text-center text-sm leading-relaxed text-slate-400">
-            確認大家都看過身分卡了，再按下開始。按下去就會開始倒數
-            {game.room!.settings.thinkingSeconds} 秒的思考時間。
+        <Card glow="guess">
+          <SectionTitle>你是猜題者</SectionTitle>
+          <p className="text-sm leading-relaxed text-slate-300">
+            請等待全體玩家按住查看各自的身分卡，確認大家都看好後，按下方按鈕開始觀察。
           </p>
-          <Button variant="guess" disabled={game.busy} onClick={game.advancePhase}>
-            開始觀察
-          </Button>
-        </>
+        </Card>
       ) : (
         <WaitingForGuesser
           guesserName={guesserName}
-          text="等他按下「開始觀察」就會開始倒數。趁現在先看好自己的身分卡。"
+          text="等他按下「開始觀察」就會開始倒數。趁現在先按住下方看好自己的身分卡。"
         />
       )}
 
       <TermCard term={round.term} hints={round.hints} />
+
+      {game.privateRole && <RoleCard info={game.privateRole} phase={round.phase} />}
+
+      {game.isGuesser && (
+        <div className="flex flex-col gap-2.5">
+          <Button variant="guess" disabled={game.busy} onClick={game.advancePhase}>
+            開始觀察（倒數 {game.room!.settings.thinkingSeconds} 秒）
+          </Button>
+          <Button
+            variant="ghost"
+            disabled={game.busy}
+            onClick={game.rerollQuestion}
+            className="min-h-[46px] border border-amber-400/30 text-base font-semibold text-amber-300 hover:bg-amber-400/10 hover:text-amber-200"
+          >
+            🎲 重抽一題（若這題有人知道）
+          </Button>
+        </div>
+      )}
     </>
   );
 }
@@ -156,11 +168,10 @@ function Discussion({ game, guesserName }: { game: GameApi; guesserName: string 
               <li key={p.id}>
                 <button
                   onClick={() => setSelected((cur) => (cur === p.id ? null : p.id))}
-                  className={`w-full rounded-2xl px-4 py-4 text-left text-lg font-bold transition ${
-                    selected === p.id
-                      ? 'bg-sky-400/20 text-sky-100 ring-2 ring-sky-400/60'
-                      : 'text-slate-100 ring-1 ring-white/10'
-                  }`}
+                  className={`w-full rounded-2xl px-4 py-4 text-left text-lg font-bold transition ${selected === p.id
+                    ? 'bg-sky-400/20 text-sky-100 ring-2 ring-sky-400/60'
+                    : 'text-slate-100 ring-1 ring-white/10'
+                    }`}
                 >
                   {p.name}
                   {!p.connected && <span className="ml-2 text-xs text-rose-300">離線</span>}
@@ -329,7 +340,7 @@ function HostControls({ game }: { game: GameApi }) {
               ))}
           </ul>
           <Button variant="danger" disabled={game.busy} onClick={game.abortGame}>
-            緊急結束整場
+            提前結算/遊戲結束
           </Button>
         </div>
       )}

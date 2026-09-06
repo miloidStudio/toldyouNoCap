@@ -237,3 +237,56 @@ describe('GameService - 猜題者嘲諷「騙肖仔！」', () => {
     expect(tauntEmits2).toHaveLength(2);
   });
 });
+
+describe('GameService - 猜題者重抽一題 (rerollQuestion)', () => {
+  it('猜題者在 ROLE_ASSIGN 階段可重抽題目，題目更換但身分與回合保持不變', async () => {
+    const { game, store, emitted } = createTestHarness();
+
+    const { room, player: host } = await game.createRoom('Host', 'socket-host');
+    const { player: p2 } = await game.joinRoom(room.code, 'Player2', 'socket-p2');
+    const { player: p3 } = await game.joinRoom(room.code, 'Player3', 'socket-p3');
+
+    await game.startGame(room.code, host.id);
+    const initialRoom = (await store.get(room.code))!;
+    const initialRound = initialRoom.currentRound!;
+    const guesserId = initialRound.guesserId;
+    const honestId = initialRound.honestId;
+    const initialQuestionId = initialRound.questionId;
+    const initialTerm = initialRound.term;
+    const nonGuesserId = initialRoom.players.find((p) => p.id !== guesserId)!.id;
+
+    expect(initialRound.phase).toBe('ROLE_ASSIGN');
+
+    // 非猜題者不能重抽
+    await expect(game.rerollQuestion(room.code, nonGuesserId)).rejects.toThrow(
+      '只有當前猜題者可以重抽題目'
+    );
+
+    // 猜題者執行重抽題目
+    await game.rerollQuestion(room.code, guesserId);
+
+    const updatedRoom = (await store.get(room.code))!;
+    const updatedRound = updatedRoom.currentRound!;
+
+    // 題目更換
+    expect(updatedRound.questionId).not.toBe(initialQuestionId);
+    expect(updatedRound.term).not.toBe(initialTerm);
+
+    // 但猜題者、老實人、輪次、階段皆不變
+    expect(updatedRound.guesserId).toBe(guesserId);
+    expect(updatedRound.honestId).toBe(honestId);
+    expect(updatedRound.roundIndex).toBe(initialRound.roundIndex);
+    expect(updatedRound.phase).toBe('ROLE_ASSIGN');
+
+    // 且題庫已使用清單記錄了前後兩題
+    expect(updatedRoom.usedQuestionIds).toContain(initialQuestionId);
+    expect(updatedRoom.usedQuestionIds).toContain(updatedRound.questionId);
+
+    // 推進到 THINKING 後不能再重抽
+    await game.advancePhase(room.code, guesserId);
+    await expect(game.rerollQuestion(room.code, guesserId)).rejects.toThrow(
+      '只有在「看身分卡」階段才能重抽題目'
+    );
+  });
+});
+

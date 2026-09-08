@@ -128,11 +128,18 @@ export class GameService {
     return { room, player };
   }
 
-  async markDisconnected(code: string, playerId: string): Promise<void> {
+  async markDisconnected(code: string, playerId: string, socketId?: string): Promise<void> {
     const room = await this.store.get(code);
     if (!room) return;
     const player = room.players.find((p) => p.id === playerId);
     if (!player) return;
+
+    // 關鍵修復：如果玩家已經換上了新的 socket 連線（如重新整理或自動重連），
+    // 舊 socket 的延遲斷線事件絕不能把新連線覆蓋為離線！
+    if (socketId && player.socketId && player.socketId !== socketId) {
+      return;
+    }
+
     player.socketId = null;
     player.disconnectedAt = Date.now();
     await this.store.set(room);
@@ -146,6 +153,26 @@ export class GameService {
         void this.handleGraceExpired(code, playerId);
       }, LIMITS.RECONNECT_GRACE_SECONDS * 1000)
     );
+  }
+
+  /**
+   * 確保玩家的 socketId 與當前操作的連線保持一致。
+   * 若玩家在線操作但因先前 race condition 被誤標為離線，自動自我修復為在線並補發身分。
+   */
+  async ensurePlayerConnected(code: string, playerId: string, socketId: string): Promise<void> {
+    const room = await this.store.get(code);
+    if (!room) return;
+    const player = room.players.find((p) => p.id === playerId);
+    if (!player) return;
+
+    if (player.socketId !== socketId) {
+      player.socketId = socketId;
+      player.disconnectedAt = null;
+      this.clearDisconnectTimer(playerId);
+      await this.store.set(room);
+      await this.broadcast(room);
+      await this.sendPrivateRoles(room);
+    }
   }
 
   private async handleGraceExpired(code: string, playerId: string): Promise<void> {

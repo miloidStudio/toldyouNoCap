@@ -202,6 +202,8 @@ export interface ClientToServerEvents {
   'game:abort': (ack: (res: AckResult<null>) => void) => void;
   /** 回到 LOBBY 再玩一場 */
   'game:restart': (ack: (res: AckResult<null>) => void) => void;
+  /** 主動請求重新同步自己的私密身分卡（避免斷線或重整後未同步） */
+  'role:sync': () => void;
 }
 
 // ---------------------------------------------------------------------------

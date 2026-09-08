@@ -81,11 +81,19 @@ export function useGame() {
       const session = loadSession();
       if (session) {
         emitWithAck<{ code: string; playerId: string }>('room:rejoin', session)
-          .then((res) => setPlayerId(res.playerId))
-          .catch(() => {
-            clearSession();
-            setPlayerId(null);
-            setRoom(null);
+          .then((res) => {
+            setPlayerId(res.playerId);
+            saveSession(res);
+          })
+          .catch((err: any) => {
+            // 只有在伺服器確認「找不到座位」或「房間不存在」時才清除 session，
+            // 避免暫時性網路波動或逾時導致本地座位資訊被誤清空
+            const errMsg = String(err?.message ?? '');
+            if (errMsg.includes('找不到你的座位') || errMsg.includes('找不到房間')) {
+              clearSession();
+              setPlayerId(null);
+              setRoom(null);
+            }
           });
       }
     };
@@ -127,9 +135,24 @@ export function useGame() {
     };
   }, [pushToast]);
 
+  // 當處於進行中的輪次，若尚未收到私密身分卡或輪次不匹配，自動向伺服器補發
+  useEffect(() => {
+    if (
+      connected &&
+      room?.round &&
+      (!privateRole || privateRole.roundIndex !== room.round.roundIndex)
+    ) {
+      getSocket().emit('role:sync');
+    }
+  }, [connected, room?.round?.roundIndex, privateRole]);
+
   // -------------------------------------------------------------------------
   // 動作
   // -------------------------------------------------------------------------
+
+  const syncRole = useCallback(() => {
+    getSocket().emit('role:sync');
+  }, []);
 
   const run = useCallback(
     async (fn: () => Promise<unknown>) => {
@@ -273,6 +296,7 @@ export function useGame() {
     taunt,
     abortGame,
     restart,
+    syncRole,
   };
 }
 

@@ -58,6 +58,29 @@ export function RoundScreen({ game }: { game: GameApi }) {
 
 // ---------------------------------------------------------------------------
 
+function SynchronizedRoleCard({ game }: { game: GameApi }) {
+  const round = game.room?.round;
+  const isSync = !!game.privateRole && !!round && game.privateRole.roundIndex === round.roundIndex;
+
+  if (isSync) {
+    return <RoleCard info={game.privateRole!} phase={round.phase} />;
+  }
+
+  return (
+    <div className="glass flex min-h-[160px] flex-col items-center justify-center gap-3 rounded-3xl p-6 text-center text-sm text-slate-400">
+      <div className="pulse-ring text-3xl">🃏</div>
+      <span className="font-bold text-slate-200">身分卡同步中…</span>
+      <button
+        type="button"
+        onClick={() => game.syncRole()}
+        className="mt-1 rounded-xl bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-amber-300 ring-1 ring-white/15 transition hover:bg-white/20 active:translate-y-px"
+      >
+        點此重新同步身分
+      </button>
+    </div>
+  );
+}
+
 function WaitingForGuesser({ guesserName, text }: { guesserName: string; text: string }) {
   return (
     <Card className="text-center" glow="guess">
@@ -87,7 +110,7 @@ function RoleAssign({ game, guesserName }: { game: GameApi; guesserName: string 
 
       <TermCard term={round.term} hints={round.hints} />
 
-      {game.privateRole && <RoleCard info={game.privateRole} phase={round.phase} />}
+      <SynchronizedRoleCard game={game} />
 
       {game.isGuesser && (
         <div className="flex flex-col gap-2.5">
@@ -121,7 +144,7 @@ function Thinking({ game }: { game: GameApi }) {
       </Card>
 
       <TermCard term={round.term} hints={round.hints} />
-      {game.privateRole && <RoleCard info={game.privateRole} phase={round.phase} />}
+      <SynchronizedRoleCard game={game} />
 
       {game.isGuesser && (
         <Button variant="secondary" disabled={game.busy} onClick={game.advancePhase}>
@@ -183,9 +206,7 @@ function Discussion({ game, guesserName }: { game: GameApi; guesserName: string 
         </Card>
       )}
 
-      {!game.isGuesser && game.privateRole && (
-        <RoleCard info={game.privateRole} phase={round.phase} />
-      )}
+      {!game.isGuesser && <SynchronizedRoleCard game={game} />}
 
       {game.isGuesser && (
         <div className="sticky bottom-3">

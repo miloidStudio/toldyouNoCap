@@ -301,9 +301,10 @@ io.on('connection', (socket) => {
     await socket.join(game.roomChannel(code));
   };
 
-  const session = () => {
+  const session = async () => {
     const s = sessions.get(socket.id);
     if (!s) throw new GameError('你還沒有加入任何房間');
+    await game.ensurePlayerConnected(s.code, s.playerId, socket.id);
     return s;
   };
 
@@ -358,7 +359,7 @@ io.on('connection', (socket) => {
 
   socket.on('room:kick', async (payload, ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.kickPlayer(s.code, s.playerId, String(payload?.playerId ?? ''));
       ack(ok(null));
     } catch (e) {
@@ -368,7 +369,7 @@ io.on('connection', (socket) => {
 
   socket.on('room:settings', async (payload, ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.updateSettings(s.code, s.playerId, payload ?? {});
       ack(ok(null));
     } catch (e) {
@@ -378,7 +379,7 @@ io.on('connection', (socket) => {
 
   socket.on('game:start', async (ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.startGame(s.code, s.playerId);
       ack(ok(null));
     } catch (e) {
@@ -388,7 +389,7 @@ io.on('connection', (socket) => {
 
   socket.on('phase:advance', async (ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.advancePhase(s.code, s.playerId);
       ack(ok(null));
     } catch (e) {
@@ -398,7 +399,7 @@ io.on('connection', (socket) => {
 
   socket.on('round:rerollQuestion', async (ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.rerollQuestion(s.code, s.playerId);
       ack(ok(null));
     } catch (e) {
@@ -408,7 +409,7 @@ io.on('connection', (socket) => {
 
   socket.on('game:vote', async (payload, ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.vote(s.code, s.playerId, String(payload?.targetId ?? ''));
       ack(ok(null));
     } catch (e) {
@@ -418,7 +419,7 @@ io.on('connection', (socket) => {
 
   socket.on('game:taunt', async (payload, ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.tauntPlayer(s.code, s.playerId, String(payload?.targetId ?? ''));
       ack(ok(null));
     } catch (e) {
@@ -428,7 +429,7 @@ io.on('connection', (socket) => {
 
   socket.on('game:abort', async (ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.abortGame(s.code, s.playerId);
       ack(ok(null));
     } catch (e) {
@@ -438,7 +439,7 @@ io.on('connection', (socket) => {
 
   socket.on('game:restart', async (ack) => {
     try {
-      const s = session();
+      const s = await session();
       await game.restart(s.code, s.playerId);
       ack(ok(null));
     } catch (e) {
@@ -446,11 +447,21 @@ io.on('connection', (socket) => {
     }
   });
 
+  socket.on('role:sync', async () => {
+    try {
+      const s = await session();
+      const room = await store.get(s.code);
+      if (room) await game.sendPrivateRoles(room);
+    } catch {
+      /* ignore */
+    }
+  });
+
   socket.on('disconnect', async () => {
     const s = sessions.get(socket.id);
     if (!s) return;
     sessions.delete(socket.id);
-    await game.markDisconnected(s.code, s.playerId);
+    await game.markDisconnected(s.code, s.playerId, socket.id);
   });
 });
 

@@ -9,6 +9,7 @@ import type {
   PrivateRoleInfo,
   PublicRoomState,
   RoomSettings,
+  SessionCredentials,
 } from '../../shared/types';
 import type { TauntNotice } from './components/TauntOverlay';
 import {
@@ -83,7 +84,7 @@ export function useGame() {
         emitWithAck<{ code: string; playerId: string }>('room:rejoin', session)
           .then((res) => {
             setPlayerId(res.playerId);
-            saveSession(res);
+            saveSession(session);
           })
           .catch((err: any) => {
             // 只有在伺服器確認「找不到座位」或「房間不存在」時才清除 session，
@@ -175,7 +176,7 @@ export function useGame() {
       saveName(playerName);
       setName(playerName);
       return run(async () => {
-        const res = await emitWithAck<{ code: string; playerId: string }>('room:create', {
+        const res = await emitWithAck<SessionCredentials>('room:create', {
           name: playerName,
         });
         saveSession(res);
@@ -192,7 +193,7 @@ export function useGame() {
       saveName(playerName);
       setName(playerName);
       return run(async () => {
-        const res = await emitWithAck<{ code: string; playerId: string }>('room:join', {
+        const res = await emitWithAck<SessionCredentials>('room:join', {
           code: code.toUpperCase(),
           name: playerName,
         });

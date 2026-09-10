@@ -1,4 +1,6 @@
-import { Question } from './types';
+import { HINT_DOMAINS, Question } from './types';
+
+const HINT_DOMAIN_SET = new Set<string>(HINT_DOMAINS);
 
 export interface ValidationIssue {
   field?: string;
@@ -45,6 +47,12 @@ export function validateQuestion(
   existingTerms: Set<string> = new Set()
 ): ValidationResult {
   const issues: ValidationIssue[] = [];
+  if (!q || typeof q !== 'object' || Array.isArray(q)) {
+    return {
+      valid: false,
+      issues: [{ message: '題目資料格式不正確', severity: 'error' }],
+    };
+  }
 
   // 1. Term 詞彙檢查
   if (!q.term || typeof q.term !== 'string' || q.term.trim().length === 0) {
@@ -66,10 +74,10 @@ export function validateQuestion(
     issues.push({ field: 'definition', message: '定義 (definition) 不可為空', severity: 'error' });
   } else {
     const len = q.definition.trim().length;
-    if (len < 20) {
-      issues.push({ field: 'definition', message: `定義長度過短（僅 ${len} 字，建議 60~130 字）`, severity: 'warning' });
-    } else if (len > 250) {
-      issues.push({ field: 'definition', message: `定義長度過長（達 ${len} 字，老實人 20 秒內難以讀完）`, severity: 'warning' });
+    if (len < 35) {
+      issues.push({ field: 'definition', message: `定義長度過短（僅 ${len} 字，建議 45~80 字）`, severity: 'warning' });
+    } else if (len > 90) {
+      issues.push({ field: 'definition', message: `定義達 ${len} 字，建議縮成 45~80 字的白話口述版本`, severity: 'warning' });
     }
   }
 
@@ -96,9 +104,61 @@ export function validateQuestion(
     }
   }
 
-  // 5. Difficulty 難度檢查
+  // 5. 專屬誘餌：新題應提供兩個能由題目字面合理誤讀的提示。
+  if (q.verified && q.decoyKeywords === undefined) {
+    issues.push({
+      field: 'decoyKeywords',
+      message: '已啟用題目應提供兩個專屬誘餌，否則遊戲會使用品質較不穩定的備援提示',
+      severity: 'warning',
+    });
+  } else if (q.decoyKeywords !== undefined) {
+    if (!Array.isArray(q.decoyKeywords) || q.decoyKeywords.length !== 2) {
+      issues.push({ field: 'decoyKeywords', message: '誤導提示必須剛好有兩個', severity: 'error' });
+    } else {
+      const decoys = q.decoyKeywords.map((value) => String(value).trim());
+      if (decoys.some((value) => !value)) {
+        issues.push({ field: 'decoyKeywords', message: '誤導提示不可為空', severity: 'error' });
+      }
+      if (decoys.some((value) => value.length !== 2)) {
+        issues.push({ field: 'decoyKeywords', message: '誤導提示必須是兩字的宏觀領域', severity: 'error' });
+      }
+      if (decoys.some((value) => !HINT_DOMAIN_SET.has(value))) {
+        issues.push({
+          field: 'decoyKeywords',
+          message: '誤導提示只能使用可辨識的宏觀領域，不可使用拆字、同義詞或諧音',
+          severity: 'error',
+        });
+      }
+      if (new Set(decoys).size !== decoys.length || decoys.includes(q.hintKeyword?.trim() ?? '')) {
+        issues.push({ field: 'decoyKeywords', message: '三個提示必須彼此不同', severity: 'error' });
+      }
+      if (q.term && decoys.some((value) => hasCharOverlap(q.term!, value))) {
+        issues.push({
+          field: 'decoyKeywords',
+          message: '誤導提示不可包含題目中出現過的字元',
+          severity: 'error',
+        });
+      }
+    }
+  }
+
+  if (q.decoyRationales !== undefined &&
+      (!Array.isArray(q.decoyRationales) || q.decoyRationales.length !== 2)) {
+    issues.push({ field: 'decoyRationales', message: '誤導提示理由必須剛好有兩個', severity: 'error' });
+  }
+
+  // 6. Difficulty 難度檢查
   if (q.difficulty !== undefined && ![1, 2, 3].includes(q.difficulty as number)) {
     issues.push({ field: 'difficulty', message: '難度必須為 1、2 或 3', severity: 'error' });
+  }
+
+  if (q.sourceUrl !== undefined && q.sourceUrl !== '') {
+    try {
+      const url = new URL(String(q.sourceUrl));
+      if (!['http:', 'https:'].includes(url.protocol)) throw new Error('bad protocol');
+    } catch {
+      issues.push({ field: 'sourceUrl', message: '來源連結必須是 http 或 https 網址', severity: 'error' });
+    }
   }
 
   const valid = !issues.some((i) => i.severity === 'error');

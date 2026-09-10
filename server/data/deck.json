@@ -9,7 +9,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/指猴",
     "pageviews": 31,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "遊戲"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「遊戲」領域的概念。"
+    ]
   },
   {
     "id": "q-0002",
@@ -21,7 +29,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/麝雉",
     "pageviews": 18,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "文化"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文化」領域的概念。"
+    ]
   },
   {
     "id": "q-0003",
@@ -33,7 +49,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/鴞鸚鵡",
     "pageviews": 44,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "語言"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「語言」領域的概念。"
+    ]
   },
   {
     "id": "q-0004",
@@ -45,7 +69,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/蜜蟻",
     "pageviews": 22,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "飲食",
+      "民俗"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「飲食」領域的概念。",
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。"
+    ]
   },
   {
     "id": "q-0005",
@@ -57,7 +89,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/鯨落",
     "pageviews": 47,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "文學",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0007",
@@ -69,7 +109,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/高鼻羚羊",
     "pageviews": 12,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "民俗"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。"
+    ]
   },
   {
     "id": "q-0008",
@@ -81,7 +129,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/飛地",
     "pageviews": 49,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "航空",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「航空」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0009",
@@ -93,7 +149,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/巴尔勒-海尔托赫",
     "pageviews": 9,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0010",
@@ -105,7 +169,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/尼莫點",
     "pageviews": 38,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "科幻"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科幻」領域的概念。"
+    ]
   },
   {
     "id": "q-0011",
@@ -117,7 +189,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/卡賓達省",
     "pageviews": 7,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "語言"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「語言」領域的概念。"
+    ]
   },
   {
     "id": "q-0012",
@@ -129,7 +209,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/唐胡安池",
     "pageviews": 6,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0013",
@@ -141,31 +229,55 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/麥克默多乾谷",
     "pageviews": 11,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "農業",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「農業」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0014",
     "term": "切連科夫輻射",
     "definition": "當帶電粒子在某種介質中的運動速度超過光在該介質中的速度時所發出的電磁輻射。核反應爐水池中那種幽幽的藍光，就是這個現象造成的。",
     "category": "科學術語",
-    "hintKeyword": "哲學",
+    "hintKeyword": "物理",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/切连科夫辐射",
     "pageviews": 26,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "軍事"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。"
+    ]
   },
   {
     "id": "q-0015",
     "term": "超流體",
     "definition": "液體冷卻到極低溫後進入的一種狀態，黏度趨近於零，可以完全無摩擦地流動。液態氦在這種狀態下甚至能沿著容器內壁往上爬，自己翻出杯口。",
     "category": "科學術語",
-    "hintKeyword": "哲學",
+    "hintKeyword": "物理",
     "difficulty": 2,
     "sourceUrl": "https://zh.wikipedia.org/wiki/超流體",
     "pageviews": 33,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "科技"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。"
+    ]
   },
   {
     "id": "q-0016",
@@ -177,7 +289,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/反安慰劑效應",
     "pageviews": 28,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "社會"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「社會」領域的概念。"
+    ]
   },
   {
     "id": "q-0017",
@@ -189,7 +309,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/潮汐鎖定",
     "pageviews": 45,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "海洋",
+      "物理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「海洋」領域的概念。",
+      "從名稱判斷時，可能被誤認為「物理」領域的概念。"
+    ]
   },
   {
     "id": "q-0018",
@@ -201,7 +329,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/同素異形體",
     "pageviews": 42,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "藝術"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「藝術」領域的概念。"
+    ]
   },
   {
     "id": "q-0020",
@@ -213,7 +349,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/1518年舞蹈瘟疫",
     "pageviews": 24,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0021",
@@ -225,7 +369,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/希臘火",
     "pageviews": 39,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "化學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「化學」領域的概念。"
+    ]
   },
   {
     "id": "q-0022",
@@ -237,7 +389,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/豬玀戰爭",
     "pageviews": 17,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "軍事",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0023",
@@ -249,7 +409,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/鬱金香時期",
     "pageviews": 5,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "經濟",
+      "文化"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文化」領域的概念。"
+    ]
   },
   {
     "id": "q-0024",
@@ -261,7 +429,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/鹽稅_(法國)",
     "pageviews": 4,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0025",
@@ -273,7 +449,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/小馬快遞",
     "pageviews": 13,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "交通",
+      "通訊"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「交通」領域的概念。",
+      "從名稱判斷時，可能被誤認為「通訊」領域的概念。"
+    ]
   },
   {
     "id": "q-0026",
@@ -285,7 +469,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/空耳",
     "pageviews": 46,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "音樂",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「音樂」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0027",
@@ -297,7 +489,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/積讀",
     "pageviews": 21,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "文學",
+      "社會"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「社會」領域的概念。"
+    ]
   },
   {
     "id": "q-0028",
@@ -309,7 +509,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/潮土油",
     "pageviews": 10,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0029",
@@ -321,7 +529,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/孤例",
     "pageviews": 3,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "文學",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0030",
@@ -333,7 +549,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/感嘆疑問號",
     "pageviews": 14,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "設計"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「設計」領域的概念。"
+    ]
   },
   {
     "id": "q-0031",
@@ -345,7 +569,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/顫抖手均衡",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0032",
@@ -357,19 +589,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/蓋梯爾問題",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "法律",
+      "教育"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「法律」領域的概念。",
+      "從名稱判斷時，可能被誤認為「教育」領域的概念。"
+    ]
   },
   {
     "id": "q-0033",
     "term": "阿羅不可能定理",
-    "definition": "社會選擇理論的根本定理，證明在擁有三個或以上選項時，不存在任何一種投票制度能夠同時滿足『非獨裁性』、『帕累托效率』與『獨立於無關選項』等基本公平條件，意即絕對完美的民主表決機制在邏輯上無法存在。",
+    "definition": "當選項至少有三個，而且投票制度要把每個人的排序整理成全體排序時，某些看似合理的公平條件無法全部同時成立。它不是說民主一定失敗，而是提醒我們：任何排序式投票制度都必須在部分公平原則之間取捨。",
     "category": "賽局理論與行為經濟學",
     "hintKeyword": "政治",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/阿羅不可能定理",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "數學",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0034",
@@ -381,19 +629,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/卡西米爾效應",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "金融",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「金融」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0035",
     "term": "瓦斯曼屏障",
-    "definition": "演化生物學的核心阻隔機制，指出多細胞生物的遺傳資訊只能從種系細胞單向傳遞給體細胞。體細胞在後天生命歷程中產生的任何變異與獲得性特徵，皆無法逆向寫入種系細胞的 DNA 中，徹底否決了拉馬克遺傳學說。",
+    "definition": "這個概念把會形成精子或卵子的細胞，和身體其他細胞分開看待。一般來說，肌肉、皮膚等身體細胞後天出現的改變，不會直接寫回生殖細胞並遺傳給下一代；不過現代研究也發現部分跨代影響需要更細緻地討論。",
     "category": "演化生物與罕見生理機制",
     "hintKeyword": "生物",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/魏斯曼屏障",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "工程",
+      "軍事"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「工程」領域的概念。",
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。"
+    ]
   },
   {
     "id": "q-0036",
@@ -405,7 +669,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/塔西佗陷阱",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0037",
@@ -417,7 +689,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/綠鬍子效應",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "時尚"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「時尚」領域的概念。"
+    ]
   },
   {
     "id": "q-0038",
@@ -429,7 +709,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/布里丹之驢",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "文學",
+      "生物"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。"
+    ]
   },
   {
     "id": "q-0040",
@@ -441,7 +729,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/比爾泰維勒",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0041",
@@ -453,7 +749,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/知識論證",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "文學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。"
+    ]
   },
   {
     "id": "q-0042",
@@ -465,7 +769,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/龐加萊復歸定理",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0043",
@@ -477,7 +789,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/皮爾當人",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "法律"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「法律」領域的概念。"
+    ]
   },
   {
     "id": "q-0044",
@@ -489,7 +809,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/薩丕爾-沃夫假說",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0045",
@@ -501,7 +829,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/盲視",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "光學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「光學」領域的概念。"
+    ]
   },
   {
     "id": "q-0046",
@@ -513,7 +849,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/紐康姆悖論",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "科幻"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科幻」領域的概念。"
+    ]
   },
   {
     "id": "q-0047",
@@ -525,7 +869,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/托爾德西里亞斯條約",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "法律",
+      "地理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「法律」領域的概念。",
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。"
+    ]
   },
   {
     "id": "q-0049",
@@ -537,7 +889,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/勝者的詛咒",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "遊戲"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「遊戲」領域的概念。"
+    ]
   },
   {
     "id": "q-0050",
@@ -549,7 +909,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/親屬選擇",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "數學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。"
+    ]
   },
   {
     "id": "q-0051",
@@ -561,7 +929,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/紐拉特之船",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "航海",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「航海」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0052",
@@ -573,7 +949,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/柯普法則",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "統計"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「統計」領域的概念。"
+    ]
   },
   {
     "id": "q-0053",
@@ -585,7 +969,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/古德哈特定律",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "管理",
+      "統計"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「管理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「統計」領域的概念。"
+    ]
   },
   {
     "id": "q-0054",
@@ -597,7 +989,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/法紹達事件",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "地理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。"
+    ]
   },
   {
     "id": "q-0055",
@@ -609,7 +1009,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/阿萊悖論",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0056",
@@ -621,19 +1029,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/推論階梯",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "教育",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「教育」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0057",
     "term": "阿列夫數",
     "definition": "集合論中用來表示無窮集合勢（基數）的符號系統。由數學家康托爾提出，揭示了「無窮」本身也有大小階層之分，例如自然數集合的無窮小於實數集合的無窮，打破了傳統上認為所有無窮都一樣大的直覺。",
     "category": "理論物理與高深科學",
-    "hintKeyword": "邏輯",
+    "hintKeyword": "集合",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/阿列夫數",
     "pageviews": 15,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "宗教",
+      "語言"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「語言」領域的概念。"
+    ]
   },
   {
     "id": "q-0058",
@@ -645,19 +1069,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/惠勒延遲選擇實驗",
     "pageviews": 15,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "心理",
+      "科幻"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科幻」領域的概念。"
+    ]
   },
   {
     "id": "q-0059",
     "term": "皮拉罕語",
-    "definition": "亞馬遜雨林皮拉罕人使用的極端語言，完全沒有數字概念、顏色專有名詞、過去或未來時態，且缺乏語法上的遞迴結構。此語言強烈挑戰了喬姆斯基的通用語法理論，顯示語言結構深受文化經驗與當下現實所形塑。",
+    "definition": "亞馬遜雨林皮拉罕人使用的語言。研究者曾指出，它沒有精確數詞，顏色與時間的表達方式也和多數語言很不一樣；它是否缺乏語法遞迴、又代表什麼意義，至今仍有爭論，因此常被拿來討論文化與語言如何互相影響。",
     "category": "語言學與符號學",
     "hintKeyword": "文化",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/皮拉罕語",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0060",
@@ -669,7 +1109,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/中立莫雷斯內特",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0061",
@@ -681,7 +1129,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/卡普格拉幻覺",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0062",
@@ -693,7 +1149,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/牧夫座空洞",
     "pageviews": 15,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "地理",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0063",
@@ -705,7 +1169,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/特里芬難題",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "數學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。"
+    ]
   },
   {
     "id": "q-0064",
@@ -717,7 +1189,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/希爾伯特旅館",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "建築"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「建築」領域的概念。"
+    ]
   },
   {
     "id": "q-0065",
@@ -729,7 +1209,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/費曼逆轉水輪",
     "pageviews": 15,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "工程",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「工程」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0066",
@@ -741,7 +1229,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/哈迪悖論",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "數學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。"
+    ]
   },
   {
     "id": "q-0067",
@@ -753,7 +1249,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/費雪失控選擇",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0068",
@@ -765,7 +1269,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/卡諾莎之辱",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0069",
@@ -777,7 +1289,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/古德曼悖論",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "語言",
+      "科學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「語言」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科學」領域的概念。"
+    ]
   },
   {
     "id": "q-0070",
@@ -789,7 +1309,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/達爾文疑難",
     "pageviews": 15,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0071",
@@ -801,7 +1329,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%BF%AA%E5%A5%A5%E7%B1%B3%E5%BE%B7%E7%BE%A4%E5%B2%9B",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "天文"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「天文」領域的概念。"
+    ]
   },
   {
     "id": "q-0072",
@@ -813,7 +1349,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9F%9C%E5%A4%A7%E2%BD%83",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0073",
@@ -825,7 +1369,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E9%A6%A6%E6%82%96%E8%AE%BA",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "文學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。"
+    ]
   },
   {
     "id": "q-0074",
@@ -837,7 +1389,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%9C%88%E8%9A%A3%E5%8D%9A%E5%BC%88",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "遊戲"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「遊戲」領域的概念。"
+    ]
   },
   {
     "id": "q-0075",
@@ -849,7 +1409,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%B2%B1%E9%B1%BC",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "軍事",
+      "音樂"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。",
+      "從名稱判斷時，可能被誤認為「音樂」領域的概念。"
+    ]
   },
   {
     "id": "q-0076",
@@ -861,7 +1429,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A6%81%E5%A3%AB%E8%BF%8C%E6%80%B0%E4%BA%89",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0077",
@@ -873,7 +1449,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%EA%B3%B0%E5%A1%90%E5%B0%94%E7%A7%91%E5%B9%BB%E8%A7%89",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0078",
@@ -885,19 +1469,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%B8%83%E5%8D%9C-%E5%9F%BA%E5%9F%BA%E6%95%88%E5%BA%94",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "物理",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「物理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0079",
     "term": "蓋提爾問題",
     "definition": "指傳統哲學中將「知識」定義為「獲得證實的真信念」所面臨的致命漏洞。蓋提爾提出多個思想實驗，證明一個人即使擁有完全合理且偶然為真的信念，卻可能是因為錯誤的推理或純粹巧合而剛好猜中，因此並不真的「擁有知識」。",
     "category": "哲學悖論與認識論",
-    "hintKeyword": "邏輯",
+    "hintKeyword": "哲學",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%9B%96%E6%8F%90%E2%85%A1%E9%97%AE%E9%A2%98",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": false,
+    "decoyKeywords": [
+      "法律",
+      "教育"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「法律」領域的概念。",
+      "從名稱判斷時，可能被誤認為「教育」領域的概念。"
+    ]
   },
   {
     "id": "q-0080",
@@ -909,7 +1509,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%90%B8%E5%BC%95%E5%AD%90",
     "pageviews": 20,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "心理",
+      "藝術"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「藝術」領域的概念。"
+    ]
   },
   {
     "id": "q-0081",
@@ -921,7 +1529,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%B1%89%E9%9A%86%E7%9A%84%E4%BD%92%E5%88%80",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "軍事"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。"
+    ]
   },
   {
     "id": "q-0082",
@@ -933,7 +1549,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%BA%93%E9%B2%81%E7%97%85",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "生物"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。"
+    ]
   },
   {
     "id": "q-0084",
@@ -945,7 +1569,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/HUNTER%C3%97HUNTER",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "文化"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文化」領域的概念。"
+    ]
   },
   {
     "id": "q-0085",
@@ -957,7 +1589,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/HUNTER%C3%97HUNTER",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "化學",
+      "科幻"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「化學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科幻」領域的概念。"
+    ]
   },
   {
     "id": "q-0086",
@@ -969,7 +1609,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/HUNTER%C3%97HUNTER",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0087",
@@ -981,7 +1629,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/ONE_PIECE%E7%94%A8%E8%AA%9E%E5%88%97%E8%A1%A8",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "天文"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「天文」領域的概念。"
+    ]
   },
   {
     "id": "q-0088",
@@ -993,7 +1649,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/ONE_PIECE%E7%94%A8%E8%AA%9E%E5%88%97%E8%A1%A8",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0089",
@@ -1005,7 +1669,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%AD%BB%E4%BA%A1%E2%80%9C%E5%86%B0%E6%9F%B1%E2%80%9D",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "犯罪",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「犯罪」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0090",
@@ -1017,7 +1689,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%B9%96%E6%B3%8A%E5%99%B4%E7%99%BC",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生態",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生態」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0091",
@@ -1029,7 +1709,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E4%BB%99%E5%A5%B3%E5%9C%88",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "民俗"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。"
+    ]
   },
   {
     "id": "q-0092",
@@ -1041,7 +1729,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%81%96%E8%89%BE%E2%80%93%E7%88%BE%E6%90%B9%E4%B9%8B%E7%81%AB",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "物理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「物理」領域的概念。"
+    ]
   },
   {
     "id": "q-0093",
@@ -1053,7 +1749,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%A6%AC%E5%80%AB%E5%93%A5%E5%B0%BC%E6%95%88%E6%87%89",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0094",
@@ -1065,7 +1769,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%B3%95%E5%A1%94%E6%91%A9%E5%B9%B2%E7%B3%B6",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "地理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。"
+    ]
   },
   {
     "id": "q-0095",
@@ -1077,7 +1789,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8D%A1%E6%9B%BC%E6%B6%A1%E8%A1%97",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "建築"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「建築」領域的概念。"
+    ]
   },
   {
     "id": "q-0096",
@@ -1089,7 +1809,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/羅科的蛇怪",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0097",
@@ -1101,7 +1829,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/諾維科夫自洽性原則",
     "pageviews": 20,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "哲學",
+      "天文"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「天文」領域的概念。"
+    ]
   },
   {
     "id": "q-0098",
@@ -1113,7 +1849,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/戴森樹",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "天文"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「天文」領域的概念。"
+    ]
   },
   {
     "id": "q-0099",
@@ -1125,7 +1869,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/提波勒柱",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "建築",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「建築」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0100",
@@ -1137,7 +1889,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/中國腦",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0101",
@@ -1149,7 +1909,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/灰蠱",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "生物"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。"
+    ]
   },
   {
     "id": "q-0102",
@@ -1161,7 +1929,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/薩皮爾-沃夫假說",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": false,
+    "decoyKeywords": [
+      "哲學",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0103",
@@ -1173,7 +1949,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/哲學殭屍",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0104",
@@ -1185,7 +1969,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/馬特洛什卡大腦",
     "pageviews": 20,
     "dykHook": null,
-    "verified": false
+    "verified": false,
+    "decoyKeywords": [
+      "心理",
+      "科技"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。"
+    ]
   },
   {
     "id": "q-0105",
@@ -1197,7 +1989,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%B7%B3%E5%AC%B0%E2%80%9C%E5%9F%83%E5%B0%94%C2%B7%E7%A7%91%E2%80%9D%E8%8A%82",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0106",
@@ -1209,7 +2009,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%B1%B8%E4%BD%93%E5%AE%A1%E5%88%A4",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "法律",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「法律」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0107",
@@ -1221,7 +2029,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8A%A8%E7%89%A9%E5%AE%A1%E5%88%A4",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "民俗"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。"
+    ]
   },
   {
     "id": "q-0108",
@@ -1233,7 +2049,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%B0%AD%E8%B0%88%E7%8B%82%E7%83%AD",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": false,
+    "decoyKeywords": [
+      "宗教",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0109",
@@ -1245,7 +2069,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%9E%AD%E7%AC%9E%E4%BC%9A",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "醫學",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0110",
@@ -1257,19 +2089,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/1859%E5%B9%B4%E5%A4%AA%E9%98%B3%E9%A3%CE%EB%9A%B4",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "科技"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。"
+    ]
   },
   {
     "id": "q-0111",
     "term": "哈利法克斯大爆炸",
-    "definition": "1917年加拿大發生的重大災難。一艘裝載高爆炸藥的軍火船與挪威船隻相撞引發大火與猛烈爆炸，釋放相當於三千噸TNT的能量，引發海嘯並摧毀整座城市，為核彈發明前最大的人為爆炸。",
+    "definition": "1917年，一艘載滿炸藥的軍火船在加拿大哈利法克斯港與另一艘船相撞，起火後發生猛烈爆炸。衝擊波、火災與海嘯重創港區和大片市區；在核武出現以前，這是規模最大的人為非核爆炸之一。",
     "category": "歷史典故與學術奇聞",
     "hintKeyword": "軍事",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%93%88%E5%88%A9%E6%B3%95%E5%85%8B%E6%96%AF%E5%A4%A7%E7%88%86%E7%82%B8",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "航海"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「航海」領域的概念。"
+    ]
   },
   {
     "id": "q-0112",
@@ -1281,19 +2129,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%81%87%E5%BE%B7%E7%B1%B3%E7%89%B9%E9%87%8C%E4%B8%80%E4%B8%96",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "文學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。"
+    ]
   },
   {
     "id": "q-0113",
     "term": "卡蘭塞貝斯戰役",
-    "definition": "1788年奧地利軍隊與鄂圖曼帝國交戰前夕發生的慘劇。奧軍先鋒因爭奪烈酒爆發內鬥並傳出敵襲誤報，夜色中不同語言的各部隊互相誤認為敵軍開火，導致自身數千人傷亡並全線崩潰。",
+    "definition": "相傳1788年奧地利軍隊與鄂圖曼帝國交戰前，奧軍因飲酒衝突和敵襲誤報，在夜色中把友軍當成敵人，造成混亂與傷亡。不過這個故事的細節和傷亡數字缺少可靠的同時代紀錄，歷史真實性仍有爭議。",
     "category": "歷史典故與學術奇聞",
     "hintKeyword": "軍事",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8D%A1%E5%85%B0%E5%A1%9E%E8%B4%9D%E6%96%AF%E6%88%B0%E4%BB%85",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0114",
@@ -1305,7 +2169,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%A1%9D%E7%9F%B3%E6%88%B0%E7%88%AD",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "軍事",
+      "化學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。",
+      "從名稱判斷時，可能被誤認為「化學」領域的概念。"
+    ]
   },
   {
     "id": "q-0115",
@@ -1317,7 +2189,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%90%A8%E5%8B%92%E5%A7%86%E5%AE%A1%E5%B7%AB%E6%A1%88",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0116",
@@ -1329,7 +2209,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%AD%BB%E8%80%85%E4%B9%8B%E8%88%9E",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "藝術"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「藝術」領域的概念。"
+    ]
   },
   {
     "id": "q-0117",
@@ -1341,7 +2229,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8D%A1%E6%8B%89%E7%93%A6%E4%BA%9A%E6%96%87%E5%8C%96",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0118",
@@ -1353,7 +2249,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%BB%A4%E6%8B%89%E9%9B%85%E4%BA%BA",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0119",
@@ -1365,7 +2269,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E8%91%AC",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0120",
@@ -1377,7 +2289,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%A7%A3%E5%89%96%E5%AD%A6%E5%89%A7%E5%9C%BA",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "藝術"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「藝術」領域的概念。"
+    ]
   },
   {
     "id": "q-0121",
@@ -1389,11 +2309,19 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E4%BC%A6%E6%95%A6%E5%95%A4%E9%85%92%E6%B5%B7%E5%95%B8",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "飲食",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「飲食」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0122",
-    "term": "鴕鳥戰爭",
+    "term": "鴯鶓戰爭",
     "definition": "1932年澳洲政府派遣攜帶機關槍的軍隊向破壞農田的兩萬隻鴯鶓宣戰的事件。然而鴯鶓極其敏捷且能承受子彈攻擊，軍隊消耗上萬發彈藥卻收效甚微，最終不得不承認失敗撤軍。",
     "category": "冷僻地緣政治與外交奇案",
     "hintKeyword": "軍事",
@@ -1401,7 +2329,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%BD%AF%E9%B9%B5%E6%88%B0%E7%88%AD",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0123",
@@ -1413,7 +2349,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%99%B6%E5%B8%83%E6%8B%89%E7%A2%97",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "考古",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「考古」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0124",
@@ -1425,7 +2369,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%9C%A3%E4%BA%9A%E5%8A%AA%E9%98%BF%E9%87%8C%E4%B9%8C%E6%96%AF",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0125",
@@ -1437,7 +2389,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%8A%AC%E5%B8%83%E5%B0%94%E4%B9%8B%E5%86%AC",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0126",
@@ -1449,31 +2409,55 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%9F%83%E5%8A%AA%E7%9E%AA%C2%B7%E5%9F%83%E5%88%A9%E4%BB%80",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "文學",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「文學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0127",
     "term": "莫伊圖拉戰役",
-    "definition": "凱爾特愛爾蘭神話中的兩場關鍵戰役事件。達努神族先後在莫伊圖拉平原擊敗原住民費爾博格人與殘暴的海盜種族弗摩爾人。第二場戰役中，英雄庫胡林之祖父魯格利用魔槍擊斃弗摩爾首領邪眼巴洛爾，確定了神族對愛爾蘭大地的統治權。",
-    "category": "冷僻地緣政治與外交奇案",
-    "hintKeyword": "歷史",
+    "definition": "愛爾蘭神話中的兩場關鍵戰役。達努神族先後在莫伊圖拉擊敗費爾博格人與弗摩爾人；第二場戰役裡，英雄魯格擊敗擁有致命魔眼的巴洛爾，讓達努神族取得愛爾蘭的統治地位。不同傳說對人物關係和戰鬥細節略有差異。",
+    "category": "神話與宗教傳說",
+    "hintKeyword": "神話",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%8E%AB%E4%BC%8A%E5%9C%96%E6%8B%89%E6%80%B0%E4%BA%89",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "軍事",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0128",
     "term": "天岩戶隱蔽事件",
     "definition": "日本神話《古事記》記載的宇宙災難事件。太陽神天照大神因不滿素戔嗚尊的暴行，怒而深鎖於天岩戶之中，導致高天原與葦原中國陷入永恆黑暗與災禍。最終諸神在洞外舉行狂歡儀式並掛起八咫鏡，誘使天照大神好奇探頭而被拉出洞穴。",
-    "category": "演化生物與罕見生理機制",
+    "category": "神話與宗教傳說",
     "hintKeyword": "宗教",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A4%A9%E5%B2%A9%E6%88%B7",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "歷史",
+      "氣象"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。",
+      "從名稱判斷時，可能被誤認為「氣象」領域的概念。"
+    ]
   },
   {
     "id": "q-0129",
@@ -1485,19 +2469,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%A9%AC%E7%BB%8D%EB%B0%94%E5%B0%94%E7%BE%A4%E5%B2%9B%E6%A3%92%E5%9B%BE",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "航海",
+      "地理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「航海」領域的概念。",
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。"
+    ]
   },
   {
     "id": "q-0130",
     "term": "克勞德鏡",
-    "definition": "十八世紀風靡歐洲風景畫家與旅客的小型略凹黑鏡。使用者必須背對景色，透過這面暗色凸鏡觀察反射畫面。它能自動降低視野中的色彩飽和度與對比度，將真實自然的複雜光影轉化為如同畫家克勞德·洛林風格般具浪漫詩意的調和色調，是早期的人工濾鏡。",
+    "definition": "十八世紀歐洲畫家與旅客使用的小型深色凸面鏡。使用者背對風景看鏡中的反射；鏡面會縮小景物、壓低色彩與明暗差異，讓眼前景色更接近畫家克勞德・洛林式的構圖和色調，很像早期的風景濾鏡。",
     "category": "歷史典故與學術奇聞",
     "hintKeyword": "藝術",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%85%8B%E5%8A%B3%E5%BE%B7%E9%95%9C",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "科技",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0131",
@@ -1509,7 +2509,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%91%A9%E6%96%AF%E8%82%AF%E6%B6%A1%E6%B6%A1",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "海洋",
+      "神話"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「海洋」領域的概念。",
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。"
+    ]
   },
   {
     "id": "q-0132",
@@ -1521,7 +2529,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%BD%97%E9%A9%AC%E5%8D%81%E4%BA%8C%E9%9D%A2%E4%BD%93",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "數學",
+      "軍事"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。"
+    ]
   },
   {
     "id": "q-0133",
@@ -1533,7 +2549,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A5%A5%E5%85%8B%EB%B1%9B",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0134",
@@ -1545,7 +2569,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A5%87%E6%99%AE",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "語言",
+      "藝術"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「語言」領域的概念。",
+      "從名稱判斷時，可能被誤認為「藝術」領域的概念。"
+    ]
   },
   {
     "id": "q-0135",
@@ -1557,7 +2589,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%AE%89%E6%8F%90%E5%9F%BA%E7%89%B9%E6%8B%89%E6%9C%BA%E6%A2%B0",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "考古",
+      "科技"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「考古」領域的概念。",
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。"
+    ]
   },
   {
     "id": "q-0136",
@@ -1569,31 +2609,55 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%A7%91%E6%8B%89%E8%B6%85%E6%B7%B1%E4%BA%95",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "工程",
+      "軍事"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「工程」領域的概念。",
+      "從名稱判斷時，可能被誤認為「軍事」領域的概念。"
+    ]
   },
   {
     "id": "q-0137",
     "term": "霍加皮",
-    "definition": "霍加皮是僅分佈於剛果民主共和國深宮熱帶雨林的珍稀特有種。雖然其臀部與腿部帶有類似斑馬的黑色條紋，但在分類學上牠卻是長頸鹿科現存唯一的近親。由於其極度隱蔽的棲地與警覺天性，西方學界直到二十世紀初才首次證實這種「非洲獨角獸」的真實存在。",
+    "definition": "霍加皮只分布在剛果民主共和國深處的熱帶雨林。牠的臀部和腿有像斑馬的條紋，實際上卻屬於長頸鹿科，是長頸鹿現存唯一的近親。因為棲地隱密又十分警覺，西方科學界直到二十世紀初才正式描述牠。",
     "category": "演化生物與罕見生理機制",
     "hintKeyword": "生物",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%9C%8D%E5%8A%A0%E7%9A%AE",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "時尚",
+      "文化"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「時尚」領域的概念。",
+      "從名稱判斷時，可能被誤認為「文化」領域的概念。"
+    ]
   },
   {
     "id": "q-0138",
     "term": "鹿豚",
     "definition": "鹿豚是印尼蘇拉威西島特有的奇特豬科動物，雄性鹿豚的上犬齒會直接穿透上唇皮膚往上彎曲生長，甚至彎曲向後刺向自己的額骨。當地人因為牠們長相奇特且長有向上彎曲的獠牙，誤以為牠們是豬和鹿雜交生出的後代。",
-    "category": "語言學與符號學",
+    "category": "演化生物與罕見生理機制",
     "hintKeyword": "生物",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%B9%BF%E8%B1%9A",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "飲食"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「飲食」領域的概念。"
+    ]
   },
   {
     "id": "q-0139",
@@ -1605,7 +2669,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%9D%8E%E8%92%82%E9%9A%86%E6%95%88%E5%BA%94",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0140",
@@ -1617,7 +2689,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%B8%83%E9%9B%B7%E6%96%AF%E6%82%96%E8%AE%BA",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "交通",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「交通」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0141",
@@ -1629,7 +2709,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%89%98%E5%85%8B%E7%BB%B4%E5%B0%94%E6%95%88%E5%BA%94",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "心理",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0142",
@@ -1641,7 +2729,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%89%BE%E6%96%AF%E4%BC%AF%E6%A0%BC%E6%82%96%E8%AE%BA",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0143",
@@ -1653,7 +2749,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%A5%A5%E6%96%AF%E6%9C%AC%E6%95%88%E5%BA%94",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "科技",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0144",
@@ -1665,19 +2769,35 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%88%88%E5%BE%B7%E5%8D%8E%E7%89%B9%E8%A7%84%E5%88%99",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "法律",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「法律」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0145",
     "term": "丁伯根法則",
     "definition": "在制定政策時，若要實現一定數量的獨立政策目標，政策制定者必須掌握至少相同數量且相互獨立的政策工具。否則政策體系將過度受限，無法同時達到所有預期的經濟或社會治理效果。",
     "category": "賽局理論與行為經濟學",
-    "hintKeyword": "政治",
+    "hintKeyword": "經濟",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E4%B8%81%E4%BC%AF%E6%A0%B9%E6%B3%95%E5%88%99",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "數學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。"
+    ]
   },
   {
     "id": "q-0146",
@@ -1689,7 +2809,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%BA%B7%E5%A4%9A%E5%A1%9E%E6%82%96%E8%AE%BA",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "數學",
+      "哲學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「數學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。"
+    ]
   },
   {
     "id": "q-0147",
@@ -1701,7 +2829,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%9F%83%E5%B0%94%E6%B3%95%E7%BD%97%E9%85%92%E5%90%A7%E2%80%9C60%25%E5%8E%95%E5%A2%83%E2%80%9D",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "社會",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「社會」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0148",
@@ -1713,7 +2849,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%BF%B4%E7%BA%B9%E9%92%88%E6%9C%80%E5%A4%A7%E5%8C%96",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "科技",
+      "經濟"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「科技」領域的概念。",
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。"
+    ]
   },
   {
     "id": "q-0149",
@@ -1725,31 +2869,55 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/沼澤人",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "神話"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。"
+    ]
   },
   {
     "id": "q-0150",
     "term": "歐米伽點",
-    "definition": "法國思想家泰亞爾提出的宇宙演化終極理論，認為宇宙中的萬物與意識都在向同一個終極焦點會合。這個概念被廣泛應用於《新世紀福音戰士》的「人類補完計劃」等動漫作品中，描述個體意志融合為單一神性集體意識的終極狀態。",
+    "definition": "法國思想家德日進提出的哲學與神學概念。他認為宇宙和生命在演化中會產生愈來愈複雜的意識，最後朝一個稱為「歐米伽點」的終極統一狀態前進。後來也有人把這個名稱用在不同的宇宙學和科幻構想中。",
     "category": "哲學悖論與認識論",
     "hintKeyword": "宇宙",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/歐米伽點",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "天文"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「天文」領域的概念。"
+    ]
   },
   {
     "id": "q-0151",
     "term": "蓋吉斯之戒",
     "definition": "柏拉圖《理想國》中的思想實驗，講述牧羊人獲得了一枚能隨意隱形的戒指後，便迅速誘惑王后並殺死國王奪取政權。該實驗探討若失去社會監督與懲罰，人性是否必定走向邪惡，成為後世無數道德抉擇遊戲與動漫的主題基石。",
     "category": "歷史典故與學術奇聞",
-    "hintKeyword": "政治",
+    "hintKeyword": "哲學",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/蓋吉斯之戒",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0152",
@@ -1761,7 +2929,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/星海爭霸設定",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "語言",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「語言」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0153",
@@ -1773,7 +2949,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E8%89%BE%E7%88%BE%E7%99%BB%E6%B3 me%B3%E7%92%B0",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "醫學"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「醫學」領域的概念。"
+    ]
   },
   {
     "id": "q-0154",
@@ -1785,7 +2969,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%9A%97%E9%BB%91%E7%A0%B4%E5%A3 me%E7%A5%9E%E7%B3%BB%E5%88%97",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0155",
@@ -1797,31 +2989,55 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%81%8A%E6%88%B2%E7%8E%8B",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "神話",
+      "歷史"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「神話」領域的概念。",
+      "從名稱判斷時，可能被誤認為「歷史」領域的概念。"
+    ]
   },
   {
     "id": "q-0156",
     "term": "庫庫泰尼文化",
-    "definition": "歐洲新石器時代至青銅時代交界處的龐大古文明。該文化最驚人的特徵是「居住地燃燒循環」：居民每隔六十至八百年間，就會將整個擁有數萬人的巨大聚落完全放火燒毀，並在原址廢墟上重建一模一樣的新城鎮，機制至今仍是謎。",
+    "definition": "歐洲新石器時代到銅石並用時代的史前文化，以大型聚落和精美彩陶聞名。許多住屋曾被火焚後又在原址重建，部分聚落大約每六十到八十年出現一次這類循環；究竟是儀式性焚燒、意外，還是其他原因，仍有爭論。",
     "category": "遠古遺蹟與消失文明",
     "hintKeyword": "考古",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%BA%93%E5%BA%93%E6%B3%B0%E5%B0%BC-%E7%89%B9%E9%87%8C%E6%B3%A2%E5%88%A9%E4%BA%9A%E6%96%87%E5%8C%96",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "社會"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「社會」領域的概念。"
+    ]
   },
   {
     "id": "q-0157",
     "term": "哥貝克力石陣",
-    "definition": "位於土耳其東南部的距今約一萬兩千年前的神殿遺蹟，比英國巨石陣早六千年。它的發現徹底顛覆了「農業導致定居與文明發展」的傳統社會學觀點，證明人類是為了舉行大型宗教祭祀聚會才開始定居與發展社會組織。",
+    "definition": "位於土耳其東南部、距今約一萬一千多年的巨石遺址，比英國巨石陣早了數千年。建造者仍以狩獵採集為主，卻已能組織大型工程與聚會，因此它讓考古學家重新思考：宗教、定居和農業究竟是以什麼順序互相推動的。",
     "category": "遠古遺蹟與消失文明",
-    "hintKeyword": "歷史",
+    "hintKeyword": "考古",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%93%A5%E8%B4%9D%E5%85%8B%E5%8A%9B%E7%9F%B3%E9%98%B5",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "宗教",
+      "建築"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。",
+      "從名稱判斷時，可能被誤認為「建築」領域的概念。"
+    ]
   },
   {
     "id": "q-0158",
@@ -1833,7 +3049,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%9D%8E%E6%99%AE%E6%9B%BC",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "生物",
+      "心理"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。",
+      "從名稱判斷時，可能被誤認為「心理」領域的概念。"
+    ]
   },
   {
     "id": "q-0159",
@@ -1845,31 +3069,55 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%BA%93%E2%B2%9D%E7%8E%AF",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "經濟",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「經濟」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0160",
     "term": "加泰土丘",
     "definition": "位於土耳其安納托利亞的九千年前超大型新石器時代聚落。該古城完全沒有街道，所有房屋緊密相連，居民必須從屋頂的孔洞進入家中。城內沒有等級階層、軍事領袖或專門的神殿痕跡，呈現極度平等且獨特的屋頂通行社會構造。",
     "category": "遠古遺蹟與消失文明",
-    "hintKeyword": "歷史",
+    "hintKeyword": "考古",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E5%8A%A0%E6%B3%B0%E5%9C%9F%E4%B8%98",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "地理",
+      "建築"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「地理」領域的概念。",
+      "從名稱判斷時，可能被誤認為「建築」領域的概念。"
+    ]
   },
   {
     "id": "q-0161",
     "term": "摩亨佐達羅",
-    "definition": "印度河流域文明於公元前兩千五百年建立的繁華古城，又稱「死者之丘」。這座失落城池擁有令人驚歎的高超都市規劃、完善的下水道系統與公共浴室，卻沒有任何王宮或軍事防禦工程，最終因未知原因在一夜之間被徹底廢棄。",
+    "definition": "印度河流域文明在約公元前二千五百年繁盛的城市，又稱「死者之丘」。城內有整齊街道、排水系統和大型公共浴池，卻沒有明顯王宮。它並非一夜消失，而是在數百年間逐漸衰退和被放棄，原因可能包括河道與氣候變化。",
     "category": "遠古遺蹟與消失文明",
     "hintKeyword": "考古",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E6%91%A9%E4%BA%A8%E4%BD%90-%E8%BE%BE%E7%BD%97",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "哲學",
+      "政治"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「哲學」領域的概念。",
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。"
+    ]
   },
   {
     "id": "q-0162",
@@ -1881,7 +3129,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E9%98%BF%E6%9D%B0%E8%B0%B7%E5%B0%94%E9%AB%98%E原",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "考古",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「考古」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0163",
@@ -1893,7 +3149,15 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E4%B9%8C%E2%B2%9D%E7%BA%B3%E5%A7%8B%E6%B3%95%E5%85%B8",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "政治",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「政治」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   },
   {
     "id": "q-0164",
@@ -1905,18 +3169,34 @@
     "sourceUrl": "https://zh.wikipedia.org/wiki/HUNTER%C3%97HUNTER%E8%A7%92%E8%89%B2%E5%88%97%E8%A1%A8#%E9%85%B7%E6%8B%89%E7%9A%AE%E5%8D%A1",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "民俗",
+      "生物"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「民俗」領域的概念。",
+      "從名稱判斷時，可能被誤認為「生物」領域的概念。"
+    ]
   },
   {
     "id": "q-0165",
     "term": "米諾斯跳牛",
-    "definition": "古希臘克里特島米諾斯文明獨有的宗教與社會競技儀式。年輕男女會正面迎向奔跑的公牛，雙手抓住牛角後利用公牛甩頭的力量在空中翻滾，最終落在公牛背上或地面。這既是勇敢的象徵，也是當時崇拜牛神的核心祭祀活動。",
+    "definition": "克里特島米諾斯文明的壁畫與器物，常畫出男女越過公牛背部的場面。這可能是競技、表演或宗教儀式，但實際動作怎麼完成、是否真的抓牛角翻身，以及它在社會中的意義，考古學界仍沒有定論。",
     "category": "古文明制度與社會結構",
     "hintKeyword": "神話",
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/%E7%B1%B3%E8%AF%BA%E6%96%AF%E6%96%87%E6%98%8E",
     "pageviews": 20,
     "dykHook": null,
-    "verified": true
+    "verified": true,
+    "decoyKeywords": [
+      "體育",
+      "宗教"
+    ],
+    "decoyRationales": [
+      "從名稱判斷時，可能被誤認為「體育」領域的概念。",
+      "從名稱判斷時，可能被誤認為「宗教」領域的概念。"
+    ]
   }
 ]

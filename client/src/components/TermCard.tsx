@@ -28,7 +28,7 @@ export function TermCard({ term, hints }: { term: string; hints: string[] }) {
             ))}
           </div>
           <p className="mt-3 text-xs leading-relaxed text-slate-500">
-            三個領域提示裡只有一個是真的，另外兩個是誘餌
+            小提示：通常三個領域提示裡只有一個是真的
           </p>
         </>
       )}

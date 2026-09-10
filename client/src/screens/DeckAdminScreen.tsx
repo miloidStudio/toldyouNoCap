@@ -47,9 +47,13 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
   const [aiCount, setAiCount] = useState(5);
   const [aiCategory, setAiCategory] = useState<string>('');
   const [aiTopic, setAiTopic] = useState<string>('');
-  const [apiKey, setApiKey] = useState<string>(() => {
+  const [adminPassword, setAdminPassword] = useState<string>(() => {
     try {
-      return localStorage.getItem('nocap.gemini_api_key') || '';
+      const saved = sessionStorage.getItem('nocap.admin_password');
+      if (saved) return saved;
+      const entered = window.prompt('請輸入 NoCap 題庫管理密碼') ?? '';
+      if (entered) sessionStorage.setItem('nocap.admin_password', entered);
+      return entered;
     } catch {
       return '';
     }
@@ -65,12 +69,30 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
     setTimeout(() => setToastMsg(null), 3000);
   };
 
+  const adminFetch = (input: RequestInfo | URL, init: RequestInit = {}) => {
+    const headers = new Headers(init.headers);
+    headers.set('X-Admin-Password', adminPassword);
+    return fetch(input, { ...init, headers });
+  };
+
+  const responseError = async (res: Response, fallback: string) => {
+    const data = await res.json().catch(() => null) as { error?: string } | null;
+    return new Error(data?.error || `${fallback}（HTTP ${res.status}）`);
+  };
+
+  const changeAdminPassword = () => {
+    const entered = window.prompt('請輸入新的 NoCap 題庫管理密碼', '') ?? '';
+    if (!entered) return;
+    sessionStorage.setItem('nocap.admin_password', entered);
+    setAdminPassword(entered);
+  };
+
   const fetchDeck = async () => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch('/api/deck');
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const res = await adminFetch('/api/deck');
+      if (!res.ok) throw await responseError(res, '無法載入題庫');
       const data: DeckResponse = await res.json();
       setQuestions(data.questions);
       setStats(data.stats);
@@ -84,18 +106,18 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
 
   useEffect(() => {
     fetchDeck();
-  }, []);
+  }, [adminPassword]);
 
   // 快速切換 verified 狀態
   const handleToggleVerified = async (q: Question) => {
     const updatedStatus = !q.verified;
     try {
-      const res = await fetch(`/api/deck/${q.id}`, {
+      const res = await adminFetch(`/api/deck/${q.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ verified: updatedStatus }),
       });
-      if (!res.ok) throw new Error('更新失敗');
+      if (!res.ok) throw await responseError(res, '更新失敗');
       setQuestions((prev) =>
         prev.map((item) => (item.id === q.id ? { ...item, verified: updatedStatus } : item))
       );
@@ -109,8 +131,8 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
   const handleDelete = async (q: Question) => {
     if (!confirm(`確定要永久刪除題目「${q.term}」嗎？`)) return;
     try {
-      const res = await fetch(`/api/deck/${q.id}`, { method: 'DELETE' });
-      if (!res.ok) throw new Error('刪除失敗');
+      const res = await adminFetch(`/api/deck/${q.id}`, { method: 'DELETE' });
+      if (!res.ok) throw await responseError(res, '刪除失敗');
       setQuestions((prev) => prev.filter((item) => item.id !== q.id));
       showToast(`已刪除「${q.term}」`);
       fetchDeck();
@@ -138,7 +160,7 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
     try {
       const url = isNew ? '/api/deck' : `/api/deck/${editingQuestion.id}`;
       const method = isNew ? 'POST' : 'PUT';
-      const res = await fetch(url, {
+      const res = await adminFetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editingQuestion),
@@ -159,8 +181,8 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
   // 重設為初始 30 題
   const handleResetDeck = async () => {
     try {
-      const res = await fetch('/api/deck/reset', { method: 'POST' });
-      if (!res.ok) throw new Error('重設失敗');
+      const res = await adminFetch('/api/deck/reset', { method: 'POST' });
+      if (!res.ok) throw await responseError(res, '重設失敗');
       setShowResetConfirm(false);
       showToast('已將題庫重設回最初的 30 筆示範題目');
       fetchDeck();
@@ -173,14 +195,13 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
   const handleStartAiGenerate = async () => {
     setAiGenerating(true);
     try {
-      const res = await fetch('/api/deck/generate', {
+      const res = await adminFetch('/api/deck/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           count: aiCount,
           category: aiCategory || undefined,
           topic: aiTopic || undefined,
-          apiKey: apiKey.trim() || undefined,
         }),
       });
       const data = await res.json();
@@ -206,7 +227,7 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
       return;
     }
     try {
-      const res = await fetch('/api/deck/batch', {
+      const res = await adminFetch('/api/deck/batch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ questions: selected }),
@@ -296,6 +317,12 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
         </div>
 
         <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            onClick={changeAdminPassword}
+            className="rounded-xl bg-white/10 px-3.5 py-2.5 text-sm font-semibold text-slate-300 transition hover:bg-white/20 active:translate-y-px"
+          >
+            🔑 更換管理密碼
+          </button>
           <button
             onClick={() => {
               setEditingQuestion({
@@ -698,6 +725,29 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
                 )}
               </div>
 
+              <div>
+                <label className="text-xs font-bold text-slate-400">
+                  專屬誤導提示（依題目字面或聯想設計）
+                </label>
+                <div className="mt-1 grid grid-cols-2 gap-2">
+                  {[0, 1].map((index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      value={editingQuestion.decoyKeywords?.[index] || ''}
+                      onChange={(e) => {
+                        const current = editingQuestion.decoyKeywords ?? ['', ''];
+                        const next: [string, string] = [current[0], current[1]];
+                        next[index] = e.target.value;
+                        setEditingQuestion({ ...editingQuestion, decoyKeywords: next });
+                      }}
+                      placeholder={index === 0 ? '字面誘餌' : '聯想誘餌'}
+                      className="w-full rounded-xl bg-black/40 px-3.5 py-2 text-sm text-slate-100 outline-none ring-1 ring-white/15 focus:ring-2 focus:ring-amber-400"
+                    />
+                  ))}
+                </div>
+              </div>
+
               {/* 老實人真實定義 */}
               <div>
                 <div className="flex items-center justify-between">
@@ -705,13 +755,13 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
                     真實定義 (Definition，老實人看)
                   </label>
                   <span
-                    className={`text-[11px] font-mono ${(editingQuestion.definition?.length || 0) >= 60 &&
-                        (editingQuestion.definition?.length || 0) <= 130
+                    className={`text-[11px] font-mono ${(editingQuestion.definition?.length || 0) >= 45 &&
+                        (editingQuestion.definition?.length || 0) <= 80
                         ? 'text-emerald-400'
                         : 'text-amber-400'
                       }`}
                   >
-                    目前 {editingQuestion.definition?.length || 0} 字（建議 60~130 字）
+                    目前 {editingQuestion.definition?.length || 0} 字（建議 45~80 字）
                   </span>
                 </div>
                 <textarea
@@ -720,7 +770,7 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
                   onChange={(e) =>
                     setEditingQuestion({ ...editingQuestion, definition: e.target.value })
                   }
-                  placeholder="請輸入詳實精確的定義與機制說明，老實人將在思考階段看此定義口述..."
+                  placeholder="請用非本科玩家也能自然轉述的白話，先說是什麼，再說最有趣的反差。"
                   className="mt-1 w-full rounded-xl bg-black/40 p-3 text-sm leading-relaxed text-slate-200 outline-none ring-1 ring-white/15 focus:ring-2 focus:ring-amber-400"
                 />
               </div>
@@ -824,8 +874,6 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
                 >
                   <option value={3}>3 題</option>
                   <option value={5}>5 題 (建議)</option>
-                  <option value={10}>10 題</option>
-                  <option value={20}>20 題</option>
                 </select>
               </div>
 
@@ -858,40 +906,9 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
                 />
               </div>
 
-              <div className="sm:col-span-2 rounded-2xl bg-black/40 p-3.5 ring-1 ring-white/10">
-                <div className="flex items-center justify-between">
-                  <label className="block text-xs font-bold text-slate-300">
-                    🔑 Gemini API Key
-                  </label>
-                  {apiKey ? (
-                    <span className="text-[11px] font-bold text-emerald-400">
-                      ✓ 已就緒（自動儲存於瀏覽器）
-                    </span>
-                  ) : (
-                    <span className="text-[11px] text-amber-400">
-                      若未輸入將嘗試讀取伺服器 .env
-                    </span>
-                  )}
-                </div>
-                <input
-                  type="password"
-                  value={apiKey}
-                  onChange={(e) => {
-                    const val = e.target.value;
-                    setApiKey(val);
-                    try {
-                      localStorage.setItem('nocap.gemini_api_key', val.trim());
-                    } catch {
-                      /* ignore */
-                    }
-                  }}
-                  placeholder="貼上你的 GEMINI_API_KEY"
-                  className="mt-1.5 w-full rounded-xl bg-black/60 px-3.5 py-2 text-sm font-mono text-amber-300 outline-none ring-1 ring-white/15 focus:ring-2 focus:ring-amber-400"
-                />
-                <p className="mt-1.5 text-[11px] text-slate-500 leading-relaxed">
-                  提示：金鑰僅安全儲存在你目前瀏覽器的 localStorage 中，或可直接存於專案根目錄的 <code className="rounded bg-white/10 px-1 py-0.5 text-slate-300">.env</code>。
-                </p>
-              </div>
+              <p className="sm:col-span-2 text-xs leading-relaxed text-slate-500">
+                Gemini 金鑰只會從伺服器環境變數讀取，不再傳到或儲存在瀏覽器。
+              </p>
             </div>
 
             <div className="mt-4 flex items-center justify-end gap-3">
@@ -959,10 +976,13 @@ export function DeckAdminScreen({ onBack }: { onBack: () => void }) {
                           </span>
                         </div>
                         <div className="mt-1 text-slate-400">
-                          提示詞：
+                          真提示：
                           <span className="font-bold text-slate-200">
                             {item.candidate.hintKeyword}
                           </span>
+                        </div>
+                        <div className="mt-1 text-slate-400">
+                          誤導提示：{item.candidate.decoyKeywords?.join('、') || '尚未產生'}
                         </div>
                         <p className="mt-1 text-slate-300">{item.candidate.definition}</p>
                       </div>

@@ -8,7 +8,7 @@
  * 開始觀察與進入下一輪由「猜題者」主導，討論階段不計時、由猜題者投票結束。
  */
 
-import { randomUUID } from 'node:crypto';
+import { createHash, randomBytes, randomUUID, timingSafeEqual } from 'node:crypto';
 import type { Server } from 'socket.io';
 import {
   DEFAULT_SETTINGS,
@@ -17,6 +17,7 @@ import {
   PrivateRoleInfo,
   PublicRoomState,
   Question,
+  PROTOCOL_VERSION,
   Room,
   RoomSettings,
   RoundPhase,
@@ -32,6 +33,7 @@ import {
   takeNextGuesser,
 } from './engine';
 import { RoomStore } from './store';
+import { getDeckVersion } from './deck';
 
 export class GameError extends Error {}
 
@@ -45,23 +47,33 @@ export class GameService {
   private disconnectTimers = new Map<string, NodeJS.Timeout>();
   /** 目前階段的結束時間戳，供前端做倒數；null 代表該階段不倒數 */
   private phaseEndsAt = new Map<string, number | null>();
+  private cleanupTimer: NodeJS.Timeout;
+  private deckVersion: string;
 
   constructor(
     private readonly store: RoomStore,
     private deck: readonly Question[],
     private readonly io: Server
-  ) {}
+  ) {
+    this.deckVersion = getDeckVersion(deck);
+    this.cleanupTimer = setInterval(() => void this.cleanupAbandonedRooms(), 5 * 60 * 1000);
+    this.cleanupTimer.unref();
+  }
 
   /** 熱更新記憶體中的題庫池 */
   updateDeck(newDeck: readonly Question[]): void {
     this.deck = newDeck;
+    this.deckVersion = getDeckVersion(newDeck);
   }
 
   // -------------------------------------------------------------------------
   // 房間生命週期
   // -------------------------------------------------------------------------
 
-  async createRoom(hostName: string, socketId: string): Promise<{ room: Room; player: Player }> {
+  async createRoom(
+    hostName: string,
+    socketId: string
+  ): Promise<{ room: Room; player: Player; reconnectToken: string }> {
     let code = generateRoomCode(4);
     let attempts = 0;
     while (await this.store.has(code)) {
@@ -70,7 +82,7 @@ export class GameService {
       code = generateRoomCode(attempts > 20 ? 6 : attempts > 8 ? 5 : 4);
     }
 
-    const player = this.makePlayer(hostName, socketId);
+    const { player, reconnectToken } = this.makePlayer(hostName, socketId);
     const room: Room = {
       code,
       hostId: player.id,
@@ -84,16 +96,19 @@ export class GameService {
       totalRounds: 0,
       totalQuestions: 0,
       createdAt: Date.now(),
+      updatedAt: Date.now(),
+      deckVersion: null,
+      deckSnapshot: [],
     };
-    await this.store.set(room);
-    return { room, player };
+    await this.saveRoom(room);
+    return { room, player, reconnectToken };
   }
 
   async joinRoom(
     code: string,
     name: string,
     socketId: string
-  ): Promise<{ room: Room; player: Player }> {
+  ): Promise<{ room: Room; player: Player; reconnectToken: string }> {
     const room = await this.requireRoom(code);
     if (room.phase !== 'LOBBY') {
       throw new GameError('遊戲已經開始了，無法中途加入');
@@ -104,16 +119,17 @@ export class GameService {
     if (room.players.some((p) => p.name === name)) {
       throw new GameError('這個暱稱已經有人用了，換一個吧');
     }
-    const player = this.makePlayer(name, socketId);
+    const { player, reconnectToken } = this.makePlayer(name, socketId);
     room.players.push(player);
-    await this.store.set(room);
-    return { room, player };
+    await this.saveRoom(room);
+    return { room, player, reconnectToken };
   }
 
   /** 斷線重連：沿用原本的 playerId 接回座位與分數 */
   async rejoinRoom(
     code: string,
     playerId: string,
+    reconnectToken: string,
     socketId: string
   ): Promise<{ room: Room; player: Player }> {
     const room = await this.requireRoom(code);
@@ -121,10 +137,13 @@ export class GameService {
     if (!player) {
       throw new GameError('找不到你的座位，可能已經被移除或等待時間超過了');
     }
+    if (!this.verifyReconnectToken(reconnectToken, player.reconnectTokenHash)) {
+      throw new GameError('重連憑證無效，請重新加入房間');
+    }
     player.socketId = socketId;
     player.disconnectedAt = null;
     this.clearDisconnectTimer(playerId);
-    await this.store.set(room);
+    await this.saveRoom(room);
     return { room, player };
   }
 
@@ -142,7 +161,7 @@ export class GameService {
 
     player.socketId = null;
     player.disconnectedAt = Date.now();
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
 
     // 等待期內回來可以無縫接回；超過就依當下階段處理
@@ -169,7 +188,7 @@ export class GameService {
       player.socketId = socketId;
       player.disconnectedAt = null;
       this.clearDisconnectTimer(playerId);
-      await this.store.set(room);
+      await this.saveRoom(room);
       await this.broadcast(room);
       await this.sendPrivateRoles(room);
     }
@@ -238,7 +257,7 @@ export class GameService {
       r.blufferIds = r.blufferIds.filter((id) => id !== playerId);
     }
 
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
   }
 
@@ -273,7 +292,7 @@ export class GameService {
     }
 
     room.settings = next;
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
   }
 
@@ -304,6 +323,8 @@ export class GameService {
     room.totalRounds = totalRounds;
     room.totalQuestions = totalQuestions;
     room.usedQuestionIds = [];
+    room.deckVersion = this.deckVersion;
+    room.deckSnapshot = this.deck.map((question) => ({ ...question }));
     room.guesserQueue = buildGuesserQueue(
       room.players.map((p) => p.id),
       totalQuestions
@@ -329,7 +350,8 @@ export class GameService {
       return;
     }
 
-    const question = pickQuestion(this.deck, room.usedQuestionIds);
+    const activeDeck = room.deckSnapshot.length > 0 ? room.deckSnapshot : this.deck;
+    const question = pickQuestion(activeDeck, room.usedQuestionIds);
     if (!question) {
       this.toastRoom(room, '題庫的題目已經用完了，提前結束本場', 'info');
       await this.endGame(room);
@@ -342,7 +364,7 @@ export class GameService {
       players: room.players,
       guesserId,
       question,
-      deck: this.deck,
+      deck: activeDeck,
     });
 
     const guesser = room.players.find((p) => p.id === guesserId);
@@ -350,7 +372,7 @@ export class GameService {
     if (guesser) guesser.timesAsGuesser++;
     if (honest) honest.timesAsHonest++;
 
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
     await this.sendPrivateRoles(room);
   }
@@ -388,7 +410,7 @@ export class GameService {
         return;
     }
 
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
     // 階段改變會影響「老實人還看不看得到定義」，所以每次都要重送身分卡
     await this.sendPrivateRoles(room);
@@ -412,7 +434,8 @@ export class GameService {
       throw new GameError('只有當前猜題者可以重抽題目');
     }
 
-    const nextQuestion = pickQuestion(this.deck, room.usedQuestionIds);
+    const activeDeck = room.deckSnapshot.length > 0 ? room.deckSnapshot : this.deck;
+    const nextQuestion = pickQuestion(activeDeck, room.usedQuestionIds);
     if (!nextQuestion) {
       throw new GameError('題庫中已無其他未使用的可用題目');
     }
@@ -421,10 +444,10 @@ export class GameService {
     round.questionId = nextQuestion.id;
     round.term = nextQuestion.term;
     round.definition = nextQuestion.definition;
-    round.hints = pickHints(nextQuestion, this.deck);
+    round.hints = pickHints(nextQuestion, activeDeck);
 
     this.toastRoom(room, '猜題者已更換題目，請重新查看身分卡！', 'info');
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
     await this.sendPrivateRoles(room);
   }
@@ -479,7 +502,7 @@ export class GameService {
       player.score += delta[player.id] ?? 0;
     }
     this.setPhase(room, 'RESULT', null);
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
     // RESULT 階段公開定義，讓所有人都看得到正解
     await this.sendPrivateRoles(room);
@@ -524,7 +547,7 @@ export class GameService {
     this.clearPhaseTimer(room.code);
     room.phase = 'GAME_OVER';
     room.currentRound = null;
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
     await this.sendPrivateRoles(room);
   }
@@ -541,12 +564,14 @@ export class GameService {
     room.roundsPlayed = 0;
     room.totalRounds = 0;
     room.totalQuestions = 0;
+    room.deckVersion = null;
+    room.deckSnapshot = [];
     for (const p of room.players) {
       p.score = 0;
       p.timesAsGuesser = 0;
       p.timesAsHonest = 0;
     }
-    await this.store.set(room);
+    await this.saveRoom(room);
     await this.broadcast(room);
     await this.sendPrivateRoles(room);
   }
@@ -602,6 +627,8 @@ export class GameService {
       totalRounds: room.totalRounds,
       totalQuestions: room.totalQuestions,
       deckSize: this.deck.length,
+      deckVersion: room.deckVersion ?? this.deckVersion,
+      protocolVersion: PROTOCOL_VERSION,
       players: room.players.map((p) => ({
         id: p.id,
         name: p.name,
@@ -698,16 +725,47 @@ export class GameService {
     }
   }
 
-  private makePlayer(name: string, socketId: string): Player {
+  private makePlayer(name: string, socketId: string): { player: Player; reconnectToken: string } {
+    const reconnectToken = randomBytes(32).toString('base64url');
     return {
-      id: randomUUID(),
-      name,
-      socketId,
-      score: 0,
-      timesAsGuesser: 0,
-      timesAsHonest: 0,
-      disconnectedAt: null,
+      reconnectToken,
+      player: {
+        id: randomUUID(),
+        name,
+        reconnectTokenHash: this.hashReconnectToken(reconnectToken),
+        socketId,
+        score: 0,
+        timesAsGuesser: 0,
+        timesAsHonest: 0,
+        disconnectedAt: null,
+      },
     };
+  }
+
+  private hashReconnectToken(token: string): string {
+    return createHash('sha256').update(token).digest('hex');
+  }
+
+  private verifyReconnectToken(token: string, expectedHash: string): boolean {
+    if (!token || !expectedHash) return false;
+    const actual = Buffer.from(this.hashReconnectToken(token), 'hex');
+    const expected = Buffer.from(expectedHash, 'hex');
+    return actual.length === expected.length && timingSafeEqual(actual, expected);
+  }
+
+  private async saveRoom(room: Room): Promise<void> {
+    room.updatedAt = Date.now();
+    await this.store.set(room);
+  }
+
+  private async cleanupAbandonedRooms(): Promise<void> {
+    const cutoff = Date.now() - 6 * 60 * 60 * 1000;
+    for (const room of await this.store.all()) {
+      if (room.updatedAt > cutoff || room.players.some((player) => player.socketId !== null)) continue;
+      this.clearPhaseTimer(room.code);
+      for (const player of room.players) this.clearDisconnectTimer(player.id);
+      await this.store.delete(room.code);
+    }
   }
 
   private clampInt(value: number, min: number, max: number, label: string): number {
@@ -720,6 +778,7 @@ export class GameService {
 
   /** 測試/維運用：關閉所有計時器 */
   shutdown(): void {
+    clearInterval(this.cleanupTimer);
     for (const t of this.phaseTimers.values()) clearTimeout(t.timeout);
     for (const t of this.disconnectTimers.values()) clearTimeout(t);
     this.phaseTimers.clear();

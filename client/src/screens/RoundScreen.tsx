@@ -26,7 +26,7 @@ export function RoundScreen({ game }: { game: GameApi }) {
 
   return (
     <Screen>
-      <header className="flex items-start justify-between pt-2">
+      <header className="pt-2">
         <div>
           <div className="flex items-center gap-2">
             <Pill tone="brand">
@@ -35,12 +35,6 @@ export function RoundScreen({ game }: { game: GameApi }) {
             <Pill>{room.code}</Pill>
           </div>
           <h1 className="mt-2 text-2xl font-black text-amber-300">{PHASE_LABEL[round.phase]}</h1>
-        </div>
-        <div className="text-right">
-          <div className="eyebrow">猜題者</div>
-          <div className={`font-bold ${game.isGuesser ? 'text-sky-300' : 'text-slate-200'}`}>
-            {game.isGuesser ? '你' : guesserName}
-          </div>
         </div>
       </header>
 
@@ -170,8 +164,8 @@ function Discussion({ game, guesserName }: { game: GameApi; guesserName: string 
         <Card glow="guess">
           <SectionTitle>你來主持</SectionTitle>
           <p className="text-sm leading-relaxed text-slate-300">
-            請大家依序解釋這個詞，想追問誰就追問誰。
-            聽夠了就直接在下面點一位你認為是<b className="text-slate-100">老實人</b>的玩家。
+            挑一個玩家開始依序解釋這個詞，儘量追問與質問吧。
+            聽夠了就來指認到底誰是<b className="text-slate-100"> 老實人 </b>而誰又在<b className="text-slate-100"> 騙肖仔！</b>。
           </p>
         </Card>
       ) : (

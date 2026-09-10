@@ -17,13 +17,14 @@ import type {
   ClientToServerEvents,
   ServerToClientEvents,
 } from '../../shared/types';
-import { LIMITS, Question } from '../../shared/types';
+import { LIMITS, PROTOCOL_VERSION, Question } from '../../shared/types';
 import { auditDeck, getNextQuestionId, validateQuestion } from '../../shared/validator';
 import { generateIntellectualQuestions } from './ai';
-import { loadDeck, loadAllQuestions, saveDeck } from './deck';
+import { getDeckVersion, loadDeck, loadAllQuestions, saveDeck } from './deck';
 import { GameError, GameService } from './game';
 import { buildNetworkInfo } from './network';
 import { InMemoryRoomStore } from './store';
+import { rateLimit, requireAdmin, securityHeaders } from './security';
 
 const here = dirname(fileURLToPath(import.meta.url));
 
@@ -50,17 +51,31 @@ for (const envPath of [resolve(here, '../../.env'), resolve(here, '../.env')]) {
 }
 
 const PORT = Number(process.env.PORT ?? 3001);
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN ?? '*';
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN?.trim();
+const IS_PRODUCTION = process.env.NODE_ENV === 'production' || process.env.RENDER === 'true';
+const corsOrigin = CLIENT_ORIGIN
+  ? CLIENT_ORIGIN === '*'
+    ? '*'
+    : CLIENT_ORIGIN.split(',').map((origin) => origin.trim())
+  : IS_PRODUCTION
+    ? false
+    : '*';
+const allowedOriginList = Array.isArray(corsOrigin) ? corsOrigin : [];
+const ALLOW_DECK_WRITES = process.env.ALLOW_DECK_WRITES === 'true';
 
 const deck = loadDeck();
 console.log(`[deck] 已載入 ${deck.length} 筆已複核題目`);
 
 const app = express();
-app.use(cors({ origin: CLIENT_ORIGIN }));
-app.use(express.json());
+app.set('trust proxy', 1);
+app.disable('x-powered-by');
+app.use(securityHeaders);
+app.use(cors({ origin: corsOrigin }));
+app.use(express.json({ limit: '64kb' }));
+app.use(rateLimit({ windowMs: 60_000, max: 300 }));
 
 app.get('/api/health', (_req, res) => {
-  res.json({ ok: true, deckSize: deck.length });
+  res.json({ ok: true, deckSize: deck.length, deckVersion: getDeckVersion(deck), protocolVersion: PROTOCOL_VERSION });
 });
 
 /**
@@ -68,12 +83,29 @@ app.get('/api/health', (_req, res) => {
  * 房主的分享連結／QR code 才不會變成別人連不到的 localhost。
  */
 app.get('/api/network', (_req, res) => {
-  res.json(buildNetworkInfo(PORT));
+  res.json(
+    IS_PRODUCTION
+      ? { addresses: [], serverPort: PORT }
+      : buildNetworkInfo(PORT)
+  );
 });
 
 // ---------------------------------------------------------------------------
 // 題庫管理 REST API
 // ---------------------------------------------------------------------------
+
+app.use('/api/deck', rateLimit({ windowMs: 60_000, max: 40 }), requireAdmin);
+
+function requireDeckWrites(_req: express.Request, res: express.Response, next: express.NextFunction) {
+  if (!ALLOW_DECK_WRITES) {
+    res.status(403).json({
+      ok: false,
+      error: '正式環境已停用直接寫入題庫；請在本機修改、通過檢查後以 Git 部署',
+    });
+    return;
+  }
+  next();
+}
 
 /** 取得所有題目、領域統計與健檢結果 */
 app.get('/api/deck', (_req, res) => {
@@ -91,7 +123,7 @@ app.get('/api/deck', (_req, res) => {
 });
 
 /** 新增單筆題目 */
-app.post('/api/deck', (req, res) => {
+app.post('/api/deck', requireDeckWrites, (req, res) => {
   const body = req.body;
   const all = loadAllQuestions();
   const existingTerms = new Set(all.map((q) => q.term.trim()));
@@ -107,6 +139,8 @@ app.post('/api/deck', (req, res) => {
     definition: String(body.definition).trim(),
     category: String(body.category).trim(),
     hintKeyword: String(body.hintKeyword).trim(),
+    decoyKeywords: normalizePair(body.decoyKeywords),
+    decoyRationales: normalizePair(body.decoyRationales),
     difficulty: ([1, 2, 3].includes(Number(body.difficulty)) ? Number(body.difficulty) : 3) as 1 | 2 | 3,
     sourceUrl: body.sourceUrl || `https://zh.wikipedia.org/wiki/${encodeURIComponent(String(body.term).trim())}`,
     pageviews: Number(body.pageviews) || 20,
@@ -121,7 +155,7 @@ app.post('/api/deck', (req, res) => {
 });
 
 /** 批次新增題目 */
-app.post('/api/deck/batch', (req, res) => {
+app.post('/api/deck/batch', requireDeckWrites, (req, res) => {
   const { questions: items } = req.body || {};
   if (!Array.isArray(items) || items.length === 0) {
     return res.status(400).json({ ok: false, error: '請提供合法的題目陣列' });
@@ -142,6 +176,8 @@ app.post('/api/deck/batch', (req, res) => {
         definition: String(item.definition).trim(),
         category: String(item.category).trim(),
         hintKeyword: String(item.hintKeyword).trim(),
+        decoyKeywords: normalizePair(item.decoyKeywords),
+        decoyRationales: normalizePair(item.decoyRationales),
         difficulty: ([1, 2, 3].includes(Number(item.difficulty)) ? Number(item.difficulty) : 3) as 1 | 2 | 3,
         sourceUrl: item.sourceUrl || `https://zh.wikipedia.org/wiki/${encodeURIComponent(String(item.term).trim())}`,
         pageviews: 20,
@@ -160,7 +196,7 @@ app.post('/api/deck/batch', (req, res) => {
 });
 
 /** 更新指定題目（可更新內容或切換 verified 開關） */
-app.put('/api/deck/:id', (req, res) => {
+app.put('/api/deck/:id', requireDeckWrites, (req, res) => {
   const id = req.params.id;
   const body = req.body;
   const all = loadAllQuestions();
@@ -189,7 +225,7 @@ app.put('/api/deck/:id', (req, res) => {
 });
 
 /** 刪除指定題目 */
-app.delete('/api/deck/:id', (req, res) => {
+app.delete('/api/deck/:id', requireDeckWrites, (req, res) => {
   const id = req.params.id;
   const all = loadAllQuestions();
   const filtered = all.filter((q) => q.id !== id);
@@ -205,25 +241,22 @@ app.delete('/api/deck/:id', (req, res) => {
 /** 呼叫 Gemini 產生候選題目供前端預覽 */
 app.post('/api/deck/generate', async (req, res) => {
   try {
-    const { count = 5, category, topic, apiKey } = req.body || {};
-    const effectiveApiKey =
-      (apiKey && String(apiKey).trim()) ||
-      (req.headers['x-gemini-api-key'] ? String(req.headers['x-gemini-api-key']).trim() : undefined) ||
-      process.env.GEMINI_API_KEY;
+    const { count = 5, category, topic } = req.body || {};
+    const effectiveApiKey = process.env.GEMINI_API_KEY;
 
     if (!effectiveApiKey) {
       return res.status(400).json({
         ok: false,
-        error: '未設定 GEMINI_API_KEY。請在網頁彈窗中輸入金鑰，或在專案根目錄 .env 檔案中設定。',
+        error: '未設定 GEMINI_API_KEY。請在本機 .env 或 Render 的 Environment 中設定。',
       });
     }
 
     const all = loadAllQuestions();
     const existingTerms = new Set(all.map((q) => q.term.trim()));
     const rawCandidates = await generateIntellectualQuestions({
-      count: Math.min(Number(count) || 5, 20),
+      count: Math.min(Number(count) || 5, 5),
       category: category ? String(category) : undefined,
-      topic: topic ? String(topic) : undefined,
+      topic: topic ? String(topic).trim().slice(0, 200) : undefined,
       apiKey: effectiveApiKey,
       existingTerms,
     });
@@ -241,7 +274,7 @@ app.post('/api/deck/generate', async (req, res) => {
 });
 
 /** 重設題庫回最初 30 題 */
-app.post('/api/deck/reset', (_req, res) => {
+app.post('/api/deck/reset', requireDeckWrites, (_req, res) => {
   const all = loadAllQuestions();
   const original30 = all.slice(0, 30);
   const activeDeck = saveDeck(original30);
@@ -251,13 +284,33 @@ app.post('/api/deck/reset', (_req, res) => {
 
 const httpServer = createServer(app);
 const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
-  cors: { origin: CLIENT_ORIGIN },
+  cors: { origin: corsOrigin },
+  allowRequest: (req, callback) => {
+    const origin = req.headers.origin;
+    if (!origin || corsOrigin === '*') return callback(null, true);
+    try {
+      const sameOrigin = new URL(origin).host === req.headers.host;
+      callback(null, sameOrigin || allowedOriginList.includes(origin));
+    } catch {
+      callback('invalid origin', false);
+    }
+  },
   // 斷線重連的緩衝：短暫斷網不會立刻掉 socket
   pingTimeout: 20000,
 });
 
 const store = new InMemoryRoomStore();
 const game = new GameService(store, deck, io);
+
+io.use((socket, next) => {
+  const version = socket.handshake.auth?.protocolVersion;
+  // 本次部署仍接受未帶版本的舊前端；之後只需移除此相容分支即可強制更新。
+  if (version !== undefined && version !== PROTOCOL_VERSION) {
+    next(new Error('VERSION_MISMATCH'));
+    return;
+  }
+  next();
+});
 
 // ---------------------------------------------------------------------------
 // 每條 socket 連線綁定的資料
@@ -269,6 +322,7 @@ interface SocketSession {
 }
 
 const sessions = new Map<string, SocketSession>();
+const connectionRates = new Map<string, { count: number; resetsAt: number }>();
 
 function ok<T>(data: T): AckResult<T> {
   return { ok: true, data };
@@ -295,8 +349,45 @@ function normalizeCode(raw: unknown): string {
   return code;
 }
 
+function normalizePair(raw: unknown): [string, string] | undefined {
+  if (!Array.isArray(raw) || raw.length !== 2) return undefined;
+  const values = raw.map((value) => String(value ?? '').trim());
+  return values.every(Boolean) ? [values[0], values[1]] : undefined;
+}
+
 io.on('connection', (socket) => {
+  const ip = socket.handshake.address;
+  const now = Date.now();
+  const previous = connectionRates.get(ip);
+  const connectionRate = !previous || previous.resetsAt <= now
+    ? { count: 0, resetsAt: now + 60_000 }
+    : previous;
+  connectionRate.count++;
+  connectionRates.set(ip, connectionRate);
+  if (connectionRate.count > 30) {
+    socket.disconnect(true);
+    return;
+  }
+
+  let eventCount = 0;
+  let eventWindowStartedAt = Date.now();
+  let roomEntryCount = 0;
+  let lastTauntAt = 0;
+  socket.onAny(() => {
+    const now = Date.now();
+    if (now - eventWindowStartedAt >= 60_000) {
+      eventWindowStartedAt = now;
+      eventCount = 0;
+    }
+    eventCount++;
+    if (eventCount > 120) socket.disconnect(true);
+  });
   const bind = async (code: string, playerId: string) => {
+    for (const [socketId, existing] of sessions) {
+      if (socketId === socket.id || existing.code !== code || existing.playerId !== playerId) continue;
+      sessions.delete(socketId);
+      io.sockets.sockets.get(socketId)?.disconnect(true);
+    }
     sessions.set(socket.id, { code, playerId });
     await socket.join(game.roomChannel(code));
   };
@@ -310,10 +401,12 @@ io.on('connection', (socket) => {
 
   socket.on('room:create', async (payload, ack) => {
     try {
+      if (sessions.has(socket.id)) throw new GameError('請先離開目前房間');
+      if (++roomEntryCount > 10) throw new GameError('建立或加入房間太頻繁，請稍後再試');
       const name = normalizeName(payload?.name);
-      const { room, player } = await game.createRoom(name, socket.id);
+      const { room, player, reconnectToken } = await game.createRoom(name, socket.id);
       await bind(room.code, player.id);
-      ack(ok({ code: room.code, playerId: player.id }));
+      ack(ok({ code: room.code, playerId: player.id, reconnectToken }));
       await game.broadcast(room);
     } catch (e) {
       ack(fail(e));
@@ -322,11 +415,13 @@ io.on('connection', (socket) => {
 
   socket.on('room:join', async (payload, ack) => {
     try {
+      if (sessions.has(socket.id)) throw new GameError('請先離開目前房間');
+      if (++roomEntryCount > 10) throw new GameError('建立或加入房間太頻繁，請稍後再試');
       const code = normalizeCode(payload?.code);
       const name = normalizeName(payload?.name);
-      const { room, player } = await game.joinRoom(code, name, socket.id);
+      const { room, player, reconnectToken } = await game.joinRoom(code, name, socket.id);
       await bind(code, player.id);
-      ack(ok({ code, playerId: player.id }));
+      ack(ok({ code, playerId: player.id, reconnectToken }));
       await game.broadcast(room);
       await game.sendPrivateRoles(room);
     } catch (e) {
@@ -336,9 +431,11 @@ io.on('connection', (socket) => {
 
   socket.on('room:rejoin', async (payload, ack) => {
     try {
+      if (++roomEntryCount > 10) throw new GameError('重連太頻繁，請稍後再試');
       const code = normalizeCode(payload?.code);
       const playerId = String(payload?.playerId ?? '');
-      const { room, player } = await game.rejoinRoom(code, playerId, socket.id);
+      const reconnectToken = String(payload?.reconnectToken ?? '');
+      const { room, player } = await game.rejoinRoom(code, playerId, reconnectToken, socket.id);
       await bind(code, player.id);
       ack(ok({ code, playerId: player.id }));
       await game.broadcast(room);
@@ -419,6 +516,9 @@ io.on('connection', (socket) => {
 
   socket.on('game:taunt', async (payload, ack) => {
     try {
+      const now = Date.now();
+      if (now - lastTauntAt < 1_000) throw new GameError('請稍等一下再使用「騙肖仔！」');
+      lastTauntAt = now;
       const s = await session();
       await game.tauntPlayer(s.code, s.playerId, String(payload?.targetId ?? ''));
       ack(ok(null));
@@ -481,9 +581,11 @@ if (existsSync(clientDist)) {
   console.log('[static] 找不到 client/dist，僅提供 API（開發模式請另外啟動 Vite）');
 }
 
-httpServer.listen(PORT, () => {
+httpServer.listen(PORT, '0.0.0.0', () => {
   console.log(`[server] NoCap 後端已啟動：http://localhost:${PORT}`);
-  const { addresses } = buildNetworkInfo(PORT);
+  const { addresses } = IS_PRODUCTION
+    ? { addresses: [] }
+    : buildNetworkInfo(PORT);
   if (addresses.length > 0) {
     console.log('[server] 同一個區網的裝置可用以下位址連進來：');
     for (const a of addresses) {

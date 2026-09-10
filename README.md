@@ -42,6 +42,38 @@ npm run build        # 建置前端到 client/dist
 npm start            # 後端一併服務前端，只開 :3001
 ```
 
+### Render 設定（單一 Web Service）
+
+這個專案是 npm workspaces，前端與後端共用根目錄及 `shared/`，所以 Render 的
+**Root Directory 請留空**，不要填 `client` 或 `server`。
+
+| Render 欄位 | 請填入 |
+| --- | --- |
+| Service Type | Web Service |
+| Language / Runtime | Node |
+| Branch | `main` |
+| Root Directory | 留空 |
+| Build Command | `npm ci && npm run build` |
+| Start Command | `npm start` |
+| Health Check Path | `/api/health` |
+| Auto-Deploy | After CI Checks Pass |
+
+Environment 中新增以下變數：
+
+| Key | Value |
+| --- | --- |
+| `ADMIN_PASSWORD` | 自己產生的長隨機密碼（不要用 `00000000`） |
+| `ALLOW_DECK_WRITES` | `false` |
+| `GEMINI_API_KEY` | 選填；只有需要 AI 產題時才設定 |
+
+`NODE_ENV` 與 `PORT` 由 Render 自動提供，不要自行固定；前後端同一服務時，`CLIENT_ORIGIN`、
+`VITE_SERVER_URL` 和 `VITE_PUBLIC_ORIGIN` 都不必填。儲存 Environment 後要等最新部署完成，
+再打開 `/api/health`，看到 `"ok": true` 才算成功。
+
+正式環境建議保持 `ALLOW_DECK_WRITES=false`：Render 沒掛 Persistent Disk 時，執行期間直接
+改寫的 `deck.json` 會在重啟或重新部署後消失。請在本機修改題庫、跑完檢查，提交到 GitHub，
+再由 Render 部署該版本。
+
 ---
 
 ## 多人流程測試步驟
@@ -84,9 +116,9 @@ npm start            # 後端一併服務前端，只開 :3001
 
 ### 提示關鍵字
 
-題目字卡下方有三個關鍵字，**只有一個真的和題目相關**，另外兩個是從別的領域抓來的誘餌。
-這樣瞎掰人不會完全一頭霧水地亂講（至少有個方向可以編），但也不會被直接告知答案的領域。
-誘餌一律從不同分類的題目挑，避免不小心也扯得上關係。
+題目字卡下方有三個關鍵字，**只有一個真的和題目相關**。新題會另外保存兩個
+針對題目字面、音譯或常見聯想設計的專屬誘餌，讓錯誤方向也足以形成合理故事。
+尚未補齊專屬誘餌的舊題，才會暫時從其他分類使用備援誘餌。
 
 ### 角色分配
 
@@ -179,6 +211,8 @@ nocap/
   "definition": "馬達加斯加特有的…",     // 只給老實人，且只在看牌與思考階段
   "category": "動物冷知識",             // 不是遊戲內的篩選條件，只用於挑選跨領域的誘餌關鍵字
   "hintKeyword": "覓食",                // 與本題相關、但不會直接洩底的提示關鍵字（必填）
+  "decoyKeywords": ["靈異", "工具"],   // 兩個針對題目字面設計的誤導提示
+  "decoyRationales": ["...", "..."],  // 編輯審核用，不會顯示給玩家
   "difficulty": 2,                     // 1–3，1 最簡單
   "sourceUrl": "https://zh.wikipedia.org/wiki/指猴",
   "pageviews": 31,                     // 日均瀏覽量，越低越冷門
@@ -221,7 +255,7 @@ npm run deck:build -- --from 2024-01 --to 2024-06 --limit 40
 | `npm run dev` | 同時啟動後端與前端（開發用） |
 | `npm run build` | 建置前端到 `client/dist` |
 | `npm start` | 只啟動後端；若 `client/dist` 存在會一併服務前端 |
-| `npm test` | 執行單元測試（遊戲 39 個 + 題庫工具 64 個） |
+| `npm test` | 執行單元測試（伺服器 47 個 + 題庫工具 10 個） |
 | `npm run typecheck` | 全部 workspace 型別檢查 |
 | `npm run deck:build -- --limit 40` | 擴充題庫（爬 DYK → LLM 整理 → 併入） |
 | `npm run deck:review` | 人工處理被退回的候選；`-- --new` 手動加題 |
@@ -232,12 +266,14 @@ npm run deck:build -- --from 2024-01 --to 2024-06 --limit 40
 | 變數 | 預設 | 說明 |
 | --- | --- | --- |
 | `PORT` | `3001` | 後端連接埠 |
-| `CLIENT_ORIGIN` | `*` | CORS 允許來源 |
+| `CLIENT_ORIGIN` | 開發時 `*`、正式時同源 | 額外允許的 CORS 來源；多個網址以逗號分隔 |
 | `DECK_PATH` | `server/data/deck.json` | 題庫路徑 |
 | `VITE_SERVER_URL` | 同源 | 前端要連的後端位址（App 包裝時必填） |
 | `VITE_PUBLIC_ORIGIN` | 自動偵測 | 正式部署有網域時指定它，會蓋過區網 IP 的自動處理 |
+| `ADMIN_PASSWORD` | 無 | 題庫管理 API 密碼；未設定時管理頁會回報尚未啟用 |
+| `ALLOW_DECK_WRITES` | `false` | 是否允許管理頁改寫題庫；正式環境建議保持關閉 |
+| `GEMINI_API_KEY` | 無 | 伺服器端 AI 產題或 `--provider gemini` 使用，不會傳到瀏覽器 |
 | `ANTHROPIC_API_KEY` | — | 擴充題庫時用（`deckbuilder`） |
-| `GEMINI_API_KEY` | — | 改用 `--provider gemini` 時 |
 | `OPENAI_API_KEY` | — | 改用 OpenAI 相容端點時 |
 | `WIKI_CONTACT` | 範例值 | 大量爬維基時請填自己的聯絡方式（維基的 User-Agent 規範） |
 
@@ -245,8 +281,21 @@ npm run deck:build -- --from 2024-01 --to 2024-06 --limit 40
 
 | 端點 | 說明 |
 | --- | --- |
-| `GET /api/health` | 健康檢查與題庫題數 |
+| `GET /api/health` | 健康檢查、題庫題數、題庫版本與通訊協議版本 |
 | `GET /api/network` | 後端偵測到的區網 IPv4 清單與連接埠（前端用來組分享連結） |
+
+`/api/deck*` 管理端點一律需要 `X-Admin-Password`，正式環境預設為唯讀。
+Gemini 金鑰只從伺服器環境變數讀取，不會傳到或保存於玩家瀏覽器。
+
+## 安全部署與版本更新
+
+- `main` 視為正式環境；功能請在 `codex/<名稱>` 或其他功能分支開發。
+- Pull Request 會由 GitHub Actions 執行型別檢查、測試、題庫健檢與正式建置。
+- Render 建議設為 **After CI Checks Pass**，避免未通過檢查的 commit 自動上線。
+- 題庫以 Git 內的 `server/data/deck.json` 為正式來源。不要在未掛載持久化儲存的
+  Render instance 上開啟 `ALLOW_DECK_WRITES`，否則重新部署後修改會消失。
+- 每場遊戲會固定開局當下的題庫快照；本機管理端更新題庫不會改變進行中的場次。
+- 房間目前仍存在單一伺服器記憶體，部署或伺服器重啟會結束線上房間；更新前請避開遊玩時間。
 
 ---
 

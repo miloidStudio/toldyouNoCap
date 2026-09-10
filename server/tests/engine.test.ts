@@ -28,6 +28,7 @@ function makePlayer(id: string, overrides: Partial<Player> = {}): Player {
   return {
     id,
     name: id.toUpperCase(),
+    reconnectTokenHash: `token-${id}`,
     socketId: `socket-${id}`,
     score: 0,
     timesAsGuesser: 0,
@@ -245,10 +246,33 @@ describe('pickHints（提示關鍵字）', () => {
     expect(positions.size).toBeGreaterThan(1);
   });
 
-  it('題庫沒有其他分類可當誘餌時，至少仍會給出相關關鍵字', () => {
+  it('題目有專屬誘餌時優先使用，不再隨機抓無關領域', () => {
+    const designed = makeQuestion({
+      hintKeyword: '地理',
+      decoyKeywords: ['航空', '房產'],
+    });
+    const hints = pickHints(designed, deck, seededRng(8));
+    expect(new Set(hints)).toEqual(new Set(['地理', '航空', '房產']));
+  });
+
+  it('舊題沒有專屬誘餌時，只使用不含題目原字的領域提示', () => {
+    const flyingLand = makeQuestion({ term: '飛地', hintKeyword: '邊界', decoyKeywords: undefined });
+    const hints = pickHints(flyingLand, deck, seededRng(5));
+    expect(hints).toHaveLength(3);
+    expect(hints).toContain('邊界');
+    for (const hint of hints.filter((value) => value !== '邊界')) {
+      expect([...hint].some((char) => flyingLand.term.includes(char))).toBe(false);
+    }
+  });
+
+  it('題庫沒有其他分類可當誘餌時，改用安全的宏觀領域', () => {
     const lonely = [target, deck[1]]; // 兩題都是「動物」
     const hints = pickHints(target, lonely, seededRng(3));
-    expect(hints).toEqual([target.hintKeyword]);
+    expect(hints).toHaveLength(3);
+    expect(hints).toContain(target.hintKeyword);
+    for (const hint of hints.filter((value) => value !== target.hintKeyword)) {
+      expect([...hint].some((char) => target.term.includes(char))).toBe(false);
+    }
   });
 });
 

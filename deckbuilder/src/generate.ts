@@ -2,7 +2,8 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Question } from '../../shared/types';
-import { generateMockQuestions, generateWithGemini, INTELLECTUAL_CATEGORIES, RawCandidate } from './gemini';
+import { generateMockQuestions, INTELLECTUAL_CATEGORIES, RawCandidate } from './gemini';
+import { generateIntellectualQuestions } from '../../server/src/ai';
 import { getNextQuestionId, validateQuestion } from './validator';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -119,7 +120,7 @@ async function main() {
       rawList = generateMockQuestions(count, existingTerms);
     } else {
       console.log(`正在呼叫 Gemini (${model || process.env.GEMINI_MODEL || 'gemini-3.6-flash'}) 深度檢索高難度題目...`);
-      rawList = await generateWithGemini({
+      rawList = await generateIntellectualQuestions({
         count,
         category,
         topic,
@@ -153,6 +154,8 @@ async function main() {
         definition: raw.definition.trim(),
         category: raw.category.trim(),
         hintKeyword: raw.hintKeyword.trim(),
+        decoyKeywords: raw.decoyKeywords,
+        decoyRationales: raw.decoyRationales,
         difficulty: raw.difficulty || 3,
         sourceUrl: raw.sourceUrl || `https://zh.wikipedia.org/wiki/${encodeURIComponent(raw.term.trim())}`,
         pageviews: 15,

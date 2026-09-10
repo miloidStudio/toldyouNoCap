@@ -144,6 +144,28 @@ export function clearSession(): void {
   }
 }
 
+/**
+ * 關閉分頁時通知伺服器。keepalive 能在頁面卸載後繼續送出短小請求；
+ * 手機切換 App 或鎖屏只會觸發 visibilitychange，不會主動呼叫這裡。
+ */
+export function notifyPageExit(session: StoredSession): void {
+  if (typeof location === 'undefined') return;
+  const base = getServerUrl()?.replace(/\/$/, '') ?? '';
+  const url = `${base}/api/room/page-exit`;
+  const body = JSON.stringify(session);
+
+  try {
+    void fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body,
+      keepalive: true,
+    });
+  } catch {
+    /* 頁面已卸載時無法補救；一般 socket disconnect 仍會保留離線座位 */
+  }
+}
+
 export function loadName(): string {
   try {
     const storage = safeStorage();

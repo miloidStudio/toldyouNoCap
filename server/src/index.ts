@@ -302,6 +302,23 @@ const io = new Server<ClientToServerEvents, ServerToClientEvents>(httpServer, {
 const store = new InMemoryRoomStore();
 const game = new GameService(store, deck, io);
 
+/**
+ * 分頁關閉時 Socket 事件可能來不及送達，因此使用瀏覽器 keepalive request 補強。
+ * reconnectToken 只允許持有該座位憑證的裝置申請離場。
+ */
+app.post('/api/room/page-exit', rateLimit({ windowMs: 60_000, max: 20 }), async (req, res) => {
+  try {
+    const code = normalizeCode(req.body?.code);
+    const playerId = String(req.body?.playerId ?? '');
+    const reconnectToken = String(req.body?.reconnectToken ?? '');
+    await game.schedulePageExit(code, playerId, reconnectToken);
+    res.status(202).json({ ok: true });
+  } catch (error) {
+    const result = fail(error);
+    res.status(401).json(result);
+  }
+});
+
 io.use((socket, next) => {
   const version = socket.handshake.auth?.protocolVersion;
   // 本次部署仍接受未帶版本的舊前端；之後只需移除此相容分支即可強制更新。
@@ -445,13 +462,24 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('room:leave', async () => {
+  socket.on('room:leave', async (ack) => {
+    try {
+      const s = sessions.get(socket.id);
+      if (!s) throw new GameError('你還沒有加入任何房間');
+      sessions.delete(socket.id);
+      await socket.leave(game.roomChannel(s.code));
+      const room = await store.get(s.code);
+      if (room) await game.removePlayer(room, s.playerId, '你已離開房間');
+      ack?.(ok(null));
+    } catch (error) {
+      ack?.(fail(error));
+    }
+  });
+
+  socket.on('presence:visibility', async (payload) => {
     const s = sessions.get(socket.id);
     if (!s) return;
-    sessions.delete(socket.id);
-    await socket.leave(game.roomChannel(s.code));
-    const room = await store.get(s.code);
-    if (room) await game.removePlayer(room, s.playerId, '你已離開房間');
+    await game.setPlayerVisibility(s.code, s.playerId, socket.id, payload?.visible === true);
   });
 
   socket.on('room:kick', async (payload, ack) => {

@@ -45,6 +45,7 @@ interface PhaseTimer {
 export class GameService {
   private phaseTimers = new Map<string, PhaseTimer>();
   private disconnectTimers = new Map<string, NodeJS.Timeout>();
+  private pageExitTimers = new Map<string, NodeJS.Timeout>();
   /** 目前階段的結束時間戳，供前端做倒數；null 代表該階段不倒數 */
   private phaseEndsAt = new Map<string, number | null>();
   private cleanupTimer: NodeJS.Timeout;
@@ -143,8 +144,43 @@ export class GameService {
     player.socketId = socketId;
     player.disconnectedAt = null;
     this.clearDisconnectTimer(playerId);
+    this.clearPageExitTimer(playerId);
     await this.saveRoom(room);
     return { room, player };
+  }
+
+  /**
+   * 瀏覽器在 pagehide 時以 keepalive request 通知「頁面正在離開」。
+   * 短暫等待是為了區分重新整理：若同一座位換成新 socket 接回，就取消離場；
+   * 否則視為關閉分頁／離開網站，直接移除座位。
+   */
+  async schedulePageExit(
+    code: string,
+    playerId: string,
+    reconnectToken: string
+  ): Promise<void> {
+    const room = await this.requireRoom(code);
+    const player = room.players.find((candidate) => candidate.id === playerId);
+    if (!player || !this.verifyReconnectToken(reconnectToken, player.reconnectTokenHash)) {
+      throw new GameError('離場憑證無效');
+    }
+
+    const socketIdAtRequest = player.socketId;
+    this.clearPageExitTimer(playerId);
+    const timer = setTimeout(() => {
+      void (async () => {
+        this.pageExitTimers.delete(playerId);
+        const latestRoom = await this.store.get(code);
+        const latestPlayer = latestRoom?.players.find((candidate) => candidate.id === playerId);
+        if (!latestRoom || !latestPlayer) return;
+
+        // 重新整理會以新的 socket 接回同一座位；這種情況不是離場。
+        if (latestPlayer.socketId && latestPlayer.socketId !== socketIdAtRequest) return;
+        await this.removePlayer(latestRoom, playerId, '你已離開房間');
+      })();
+    }, LIMITS.PAGE_EXIT_GRACE_SECONDS * 1000);
+    timer.unref();
+    this.pageExitTimers.set(playerId, timer);
   }
 
   async markDisconnected(code: string, playerId: string, socketId?: string): Promise<void> {
@@ -174,6 +210,25 @@ export class GameService {
     );
   }
 
+  /** 手機切換 App、鎖屏或頁面回到前景時，立即同步公開在線狀態。 */
+  async setPlayerVisibility(
+    code: string,
+    playerId: string,
+    socketId: string,
+    visible: boolean
+  ): Promise<void> {
+    const room = await this.store.get(code);
+    const player = room?.players.find((candidate) => candidate.id === playerId);
+    if (!room || !player || player.socketId !== socketId) return;
+
+    const wasConnected = player.disconnectedAt === null;
+    if (wasConnected === visible) return;
+    player.disconnectedAt = visible ? null : Date.now();
+    if (visible) this.clearDisconnectTimer(playerId);
+    await this.saveRoom(room);
+    await this.broadcast(room);
+  }
+
   /**
    * 確保玩家的 socketId 與當前操作的連線保持一致。
    * 若玩家在線操作但因先前 race condition 被誤標為離線，自動自我修復為在線並補發身分。
@@ -188,6 +243,7 @@ export class GameService {
       player.socketId = socketId;
       player.disconnectedAt = null;
       this.clearDisconnectTimer(playerId);
+      this.clearPageExitTimer(playerId);
       await this.saveRoom(room);
       await this.broadcast(room);
       await this.sendPrivateRoles(room);
@@ -201,18 +257,14 @@ export class GameService {
     const player = room.players.find((p) => p.id === playerId);
     if (!player || player.socketId !== null) return;
 
-    if (room.phase === 'LOBBY') {
-      // Lobby 階段直接移除，不影響任何進行中的資料
-      await this.removePlayer(room, playerId, '等待重連逾時，已離開房間');
-    } else {
-      // 遊戲進行中保留座位與分數，交由房主決定是否踢除
-      this.toastRoom(
-        room,
-        `「${player.name}」已離線超過 ${LIMITS.RECONNECT_GRACE_SECONDS} 秒，房主可手動踢除`,
-        'info'
-      );
-      await this.broadcast(room);
-    }
+    // 普通斷線無法可靠判斷是斷網、鎖屏或 App 被系統暫停，因此一律保留座位。
+    // 真正移除只由關頁通知、主動離開或房主踢除觸發。
+    this.toastRoom(
+      room,
+      `「${player.name}」已離線超過 ${LIMITS.RECONNECT_GRACE_SECONDS} 秒，座位仍會保留`,
+      'info'
+    );
+    await this.broadcast(room);
   }
 
   async removePlayer(room: Room, playerId: string, reason: string): Promise<void> {
@@ -220,6 +272,7 @@ export class GameService {
     if (index < 0) return;
     const [removed] = room.players.splice(index, 1);
     this.clearDisconnectTimer(playerId);
+    this.clearPageExitTimer(playerId);
 
     // 通知被移除的人
     if (removed.socketId) {
@@ -234,7 +287,9 @@ export class GameService {
 
     // 房主離開就轉移給下一位（優先給還連線中的）
     if (room.hostId === playerId) {
-      const next = room.players.find((p) => p.socketId !== null) ?? room.players[0];
+      const next =
+        room.players.find((p) => p.socketId !== null && p.disconnectedAt === null) ??
+        room.players[0];
       room.hostId = next.id;
       this.toastRoom(room, `房主已離開，「${next.name}」成為新房主`, 'info');
     }
@@ -612,6 +667,14 @@ export class GameService {
     }
   }
 
+  private clearPageExitTimer(playerId: string): void {
+    const timer = this.pageExitTimers.get(playerId);
+    if (timer) {
+      clearTimeout(timer);
+      this.pageExitTimers.delete(playerId);
+    }
+  }
+
   // -------------------------------------------------------------------------
   // 廣播
   // -------------------------------------------------------------------------
@@ -635,7 +698,7 @@ export class GameService {
         score: p.score,
         timesAsGuesser: p.timesAsGuesser,
         timesAsHonest: p.timesAsHonest,
-        connected: p.socketId !== null,
+        connected: p.socketId !== null && p.disconnectedAt === null,
         isHost: p.id === room.hostId,
       })),
       round: round
@@ -763,7 +826,10 @@ export class GameService {
     for (const room of await this.store.all()) {
       if (room.updatedAt > cutoff || room.players.some((player) => player.socketId !== null)) continue;
       this.clearPhaseTimer(room.code);
-      for (const player of room.players) this.clearDisconnectTimer(player.id);
+      for (const player of room.players) {
+        this.clearDisconnectTimer(player.id);
+        this.clearPageExitTimer(player.id);
+      }
       await this.store.delete(room.code);
     }
   }
@@ -781,7 +847,9 @@ export class GameService {
     clearInterval(this.cleanupTimer);
     for (const t of this.phaseTimers.values()) clearTimeout(t.timeout);
     for (const t of this.disconnectTimers.values()) clearTimeout(t);
+    for (const t of this.pageExitTimers.values()) clearTimeout(t);
     this.phaseTimers.clear();
     this.disconnectTimers.clear();
+    this.pageExitTimers.clear();
   }
 }

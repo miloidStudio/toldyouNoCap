@@ -19,6 +19,7 @@ import {
   isLoopbackHost,
   loadName,
   loadSession,
+  notifyPageExit,
   parseJoinCodeFromLocation,
   saveName,
   saveSession,
@@ -85,6 +86,9 @@ export function useGame() {
           .then((res) => {
             setPlayerId(res.playerId);
             saveSession(session);
+            if (document.visibilityState === 'hidden') {
+              socket.emit('presence:visibility', { visible: false });
+            }
           })
           .catch((err: any) => {
             // 只有在伺服器確認「找不到座位」或「房間不存在」時才清除 session，
@@ -107,13 +111,18 @@ export function useGame() {
       setPrivateRole(null);
       setPlayerId(null);
       setTauntNotice(null);
-      pushToast(reason, 'error');
+      pushToast(reason, reason === '你已離開房間' ? 'info' : 'error');
     };
     const onToast = (payload: { message: string; kind: 'info' | 'error' }) =>
       pushToast(payload.message, payload.kind);
     const onTaunted = (payload: { guesserName: string; timestamp: number }) => {
       const id = ++tauntIdRef.current;
       setTauntNotice({ guesserName: payload.guesserName, id });
+    };
+    const onVisibilityChange = () => {
+      socket.emit('presence:visibility', {
+        visible: document.visibilityState === 'visible',
+      });
     };
 
     socket.on('connect', onConnect);
@@ -123,6 +132,7 @@ export function useGame() {
     socket.on('room:closed', onClosed);
     socket.on('toast', onToast);
     socket.on('game:taunted', onTaunted);
+    document.addEventListener('visibilitychange', onVisibilityChange);
     if (socket.connected) onConnect();
 
     return () => {
@@ -133,8 +143,21 @@ export function useGame() {
       socket.off('room:closed', onClosed);
       socket.off('toast', onToast);
       socket.off('game:taunted', onTaunted);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
     };
   }, [pushToast]);
+
+  // 關閉分頁／離開網站時申請退出。BFCache 返回與手機單純切換 App 不算離場；
+  // 重新整理雖會觸發，但新頁面會在伺服器的短暫等待期內接回並取消退出。
+  useEffect(() => {
+    const onPageHide = (event: PageTransitionEvent) => {
+      if (event.persisted) return;
+      const session = loadSession();
+      if (session) notifyPageExit(session);
+    };
+    window.addEventListener('pagehide', onPageHide);
+    return () => window.removeEventListener('pagehide', onPageHide);
+  }, []);
 
   // 當處於進行中的輪次，若尚未收到私密身分卡或輪次不匹配，自動向伺服器補發
   useEffect(() => {
@@ -206,14 +229,16 @@ export function useGame() {
     [run]
   );
 
-  const leaveRoom = useCallback(() => {
-    getSocket().emit('room:leave');
+  const leaveRoom = useCallback(async () => {
+    const left = await run(() => emitWithAck('room:leave'));
+    if (!left) return false;
     clearSession();
     setRoom(null);
     setPrivateRole(null);
     setPlayerId(null);
     setTauntNotice(null);
-  }, []);
+    return true;
+  }, [run]);
 
   const updateSettings = useCallback(
     (patch: Partial<RoomSettings>) => run(() => emitWithAck('room:settings', patch)),

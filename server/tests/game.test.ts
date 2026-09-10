@@ -95,6 +95,25 @@ function createTestHarness() {
   return { store, game, emitted };
 }
 
+describe('GameService - 私密重連憑證', () => {
+  it('只有持有正確 reconnectToken 的裝置能接回座位', async () => {
+    const { game } = createTestHarness();
+    const { room, player, reconnectToken } = await game.createRoom('Host', 'socket-old');
+
+    await expect(
+      game.rejoinRoom(room.code, player.id, 'stolen-or-guessed-token', 'socket-attacker')
+    ).rejects.toThrow('重連憑證無效');
+
+    const rejoined = await game.rejoinRoom(
+      room.code,
+      player.id,
+      reconnectToken,
+      'socket-new'
+    );
+    expect(rejoined.player.socketId).toBe('socket-new');
+  });
+});
+
 describe('GameService - 輪數與全場總場次', () => {
   it('一輪代表每位玩家各擔任一次猜題者，總場次 = 輪數 * 人數', async () => {
     const { game, store } = createTestHarness();
@@ -289,4 +308,3 @@ describe('GameService - 猜題者重抽一題 (rerollQuestion)', () => {
     );
   });
 });
-

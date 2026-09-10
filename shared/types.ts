@@ -34,6 +34,8 @@ export type Role = 'GUESSER' | 'HONEST' | 'BLUFFER';
 export interface Player {
   id: string;
   name: string;
+  /** 斷線重連密鑰的 SHA-256；只存在伺服器房間狀態，絕不傳給其他玩家 */
+  reconnectTokenHash: string;
   /** null 代表暫時斷線（仍保留座位與分數） */
   socketId: string | null;
   score: number;
@@ -53,14 +55,33 @@ export interface Question {
    * 確保不相關的關鍵字真的來自別的領域。
    */
   category: string;
-  /** 與本題相關、但不會直接洩底的關鍵字（提示用） */
+  /** 與本題相關、但不會直接洩底的宏觀領域（提示用） */
   hintKeyword: string;
+  /**
+   * 兩個可能被誤認的宏觀領域。不得包含題目原字；舊題若尚未補齊，
+   * 伺服器會使用安全領域表備援；新題與 AI 產題應一律提供。
+   */
+  decoyKeywords?: [string, string];
+  /** 僅供編輯者審核誘餌是否合理，不會送到遊戲畫面 */
+  decoyRationales?: [string, string];
   difficulty: 1 | 2 | 3;
   sourceUrl: string;
   pageviews: number;
   dykHook: string | null;
   verified: boolean;
 }
+
+/** 玩家畫面可使用的兩字領域提示，避免把拆字、同義詞或廉價諧音當成誘餌。 */
+export const HINT_DOMAINS = [
+  '生物', '醫學', '心理', '哲學', '歷史', '政治', '經濟', '金融',
+  '法律', '犯罪', '社會', '文化', '民俗', '習俗', '宗教', '神話',
+  '語言', '語文', '文學', '藝術', '設計', '音樂', '時尚', '教育',
+  '管理', '統計', '數學', '集合', '邏輯', '賽局', '物理', '化學',
+  '光學', '力學', '天文', '宇宙', '地理', '地質', '氣象', '海洋',
+  '生態', '環境', '農業', '飲食', '交通', '通訊', '航空', '航海',
+  '軍事', '科技', '工程', '建築', '考古', '資訊', '遊戲', '動漫',
+  '科幻', '影視', '小說', '體育', '科學',
+] as const;
 
 export interface Round {
   roundIndex: number;
@@ -103,6 +124,12 @@ export interface Room {
   /** 全場總猜題場次（totalRounds * 玩家數） */
   totalQuestions: number;
   createdAt: number;
+  /** 最近一次狀態變更時間，用於清除被遺棄的房間 */
+  updatedAt: number;
+  /** 開局當下固定的題庫版本；遊戲中更新題庫不會影響這一場 */
+  deckVersion: string | null;
+  /** 開局時的不可變題庫快照，只保存在伺服器 */
+  deckSnapshot: Question[];
 }
 
 // ---------------------------------------------------------------------------
@@ -151,6 +178,10 @@ export interface PublicRoomState {
   totalQuestions: number;
   /** 題庫中可用的題目總數，用來擋下「輪數超過題目數」 */
   deckSize: number;
+  /** 目前進行中遊戲所固定的題庫版本；Lobby 時為目前版本 */
+  deckVersion: string;
+  /** 前後端即時通訊協議版本 */
+  protocolVersion: number;
   /** 依分數排序後的最終排名，僅在 GAME_OVER 時提供 */
   finalRanking: { rank: number; playerId: string; name: string; score: number }[] | null;
 }
@@ -176,14 +207,14 @@ export interface PrivateRoleInfo {
 export interface ClientToServerEvents {
   'room:create': (
     payload: { name: string },
-    ack: (res: AckResult<{ code: string; playerId: string }>) => void
+    ack: (res: AckResult<SessionCredentials>) => void
   ) => void;
   'room:join': (
     payload: { code: string; name: string },
-    ack: (res: AckResult<{ code: string; playerId: string }>) => void
+    ack: (res: AckResult<SessionCredentials>) => void
   ) => void;
   'room:rejoin': (
-    payload: { code: string; playerId: string },
+    payload: SessionCredentials,
     ack: (res: AckResult<{ code: string; playerId: string }>) => void
   ) => void;
   'room:leave': () => void;
@@ -221,6 +252,13 @@ export interface ServerToClientEvents {
 
 export type AckResult<T> = { ok: true; data: T } | { ok: false; error: string };
 
+/** 只回傳給該玩家並保存在其裝置的重連憑證 */
+export interface SessionCredentials {
+  code: string;
+  playerId: string;
+  reconnectToken: string;
+}
+
 // ---------------------------------------------------------------------------
 // 平衡性常數（集中管理，方便日後調整）
 // ---------------------------------------------------------------------------
@@ -252,6 +290,9 @@ export const DEFAULT_SETTINGS: RoomSettings = {
   totalRounds: 1,
   thinkingSeconds: 20,
 };
+
+/** Socket 事件或公開狀態出現破壞性變更時遞增 */
+export const PROTOCOL_VERSION = 2;
 
 // ---------------------------------------------------------------------------
 // 網路資訊（讓房主的分享連結／QR code 用區網 IP 而不是 localhost）

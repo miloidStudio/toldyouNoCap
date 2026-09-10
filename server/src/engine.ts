@@ -5,12 +5,18 @@
  * 亂數來源以參數注入，方便單元測試與日後搬移。
  */
 
-import { LIMITS, Player, Question, Round, SCORE } from '../../shared/types';
+import { HINT_DOMAINS, LIMITS, Player, Question, Round, SCORE } from '../../shared/types';
 
 /** 亂數來源介面：回傳 [0, 1) 的浮點數 */
 export type Rng = () => number;
 
 export const defaultRng: Rng = Math.random;
+
+/** 舊題缺少人工誘餌時使用的安全備援，只提供宏觀領域，不做題目拆字。 */
+function hasSharedCharacter(left: string, right: string): boolean {
+  const chars = new Set([...left.replace(/\s+/g, '')]);
+  return [...right.replace(/\s+/g, '')].some((char) => chars.has(char));
+}
 
 // ---------------------------------------------------------------------------
 // 基礎工具
@@ -140,30 +146,36 @@ export function pickQuestion(
 // ---------------------------------------------------------------------------
 
 /**
- * 產生該輪的三個提示關鍵字：本題的相關關鍵字 1 個 + 無關關鍵字 2 個，順序打散。
+ * 產生該輪的三個提示關鍵字：本題的相關關鍵字 1 個 + 誤導關鍵字 2 個，順序打散。
  *
- * 用意是讓瞎掰人不會完全一頭霧水地亂講，又不能讓人直接看穿題目方向，
- * 所以無關的那兩個一律從「不同分類」的題目裡挑（分類只在這裡用到，
- * 不會被拿去當遊戲內的篩選條件）。
+ * 優先採用編輯者為這一題設計的兩個領域誘餌。誘餌不可使用題目原字；
+ * 舊資料缺少專屬誘餌時，才從其他題目的領域提示及安全領域表中補足。
  */
 export function pickHints(
   question: Question,
-  deck: readonly Question[],
+  _deck: readonly Question[],
   rng: Rng = defaultRng
 ): string[] {
-  const decoyPool = deck
-    .filter(
-      (q) =>
-        q.id !== question.id &&
-        q.category !== question.category &&
-        q.hintKeyword &&
-        q.hintKeyword !== question.hintKeyword
-    )
-    .map((q) => q.hintKeyword);
-
-  // 去重，避免兩個誘餌撞在一起
-  const unique = [...new Set(decoyPool)];
-  const decoys = shuffle(unique, rng).slice(0, LIMITS.HINT_COUNT - 1);
+  const authoredDecoys = (question.decoyKeywords ?? []).filter(
+    (keyword) =>
+      keyword &&
+      keyword !== question.hintKeyword &&
+      !hasSharedCharacter(question.term, keyword)
+  );
+  // 去重，避免兩個誘餌撞在一起。缺資料時也只從領域表補，不拆解題目文字。
+  const decoys = [
+    ...new Set([
+      ...authoredDecoys,
+      ...shuffle(
+        HINT_DOMAINS.filter(
+          (keyword) =>
+            keyword !== question.hintKeyword &&
+            !hasSharedCharacter(question.term, keyword)
+        ),
+        rng
+      ),
+    ]),
+  ].slice(0, LIMITS.HINT_COUNT - 1);
 
   return shuffle([question.hintKeyword, ...decoys], rng);
 }

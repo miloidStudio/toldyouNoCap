@@ -7,7 +7,7 @@
  * 只需要替換這個檔案的實作，畫面與遊戲邏輯完全不用動。
  */
 
-import type { NetworkInfo } from '../../../shared/types';
+import type { NetworkInfo, SessionCredentials } from '../../../shared/types';
 
 export type Platform = 'web' | 'capacitor' | 'electron';
 
@@ -106,10 +106,7 @@ export function clearJoinUrl(): void {
 const SESSION_KEY = 'nocap.session';
 const NAME_KEY = 'nocap.name';
 
-export interface StoredSession {
-  code: string;
-  playerId: string;
-}
+export type StoredSession = SessionCredentials;
 
 function safeStorage(): Storage | null {
   try {
@@ -125,7 +122,7 @@ export function loadSession(): StoredSession | null {
     const raw = storage?.getItem(SESSION_KEY);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as StoredSession;
-    return parsed.code && parsed.playerId ? parsed : null;
+    return parsed.code && parsed.playerId && parsed.reconnectToken ? parsed : null;
   } catch {
     return null;
   }

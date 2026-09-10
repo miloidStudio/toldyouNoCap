@@ -9,7 +9,8 @@
  * 以及挑選提示關鍵字時確保誘餌來自不同領域。
  */
 
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, renameSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { Question } from '../../shared/types';
@@ -22,6 +23,11 @@ export const DECK_PATH = process.env.DECK_PATH
   : resolve(here, '../data/deck.json');
 
 let cache: Question[] | null = null;
+
+/** 題庫內容版本，用來讓一場遊戲固定在開局時的題目集合 */
+export function getDeckVersion(questions: readonly Question[]): string {
+  return createHash('sha256').update(JSON.stringify(questions)).digest('hex').slice(0, 12);
+}
 
 export function loadDeck(force = false): Question[] {
   if (cache && !force) return cache;
@@ -80,7 +86,12 @@ export function loadAllQuestions(): Question[] {
 
 /** 儲存題庫至磁碟並刷新記憶體快取 */
 export function saveDeck(questions: readonly Question[]): Question[] {
-  writeFileSync(DECK_PATH, JSON.stringify(questions, null, 2) + '\n', 'utf-8');
+  const tempPath = `${DECK_PATH}.${process.pid}.tmp`;
+  writeFileSync(tempPath, JSON.stringify(questions, null, 2) + '\n', {
+    encoding: 'utf-8',
+    mode: 0o600,
+  });
+  renameSync(tempPath, DECK_PATH);
   cache = questions.filter((q) => q.verified);
   return cache;
 }

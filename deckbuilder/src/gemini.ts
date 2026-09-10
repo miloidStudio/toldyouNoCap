@@ -15,6 +15,8 @@ export interface RawCandidate {
   definition: string;
   category: string;
   hintKeyword: string;
+  decoyKeywords?: [string, string];
+  decoyRationales?: [string, string];
   difficulty: 1 | 2 | 3;
   sourceUrl?: string;
   dykHook?: string | null;
@@ -31,7 +33,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '波茲曼大腦',
       definition: '熱力學與宇宙學思想實驗。假定宇宙由熱寂狀態歷經無窮隨機量子漲落，則由虛空中直接自發凝聚出一個具備完整虛假記憶的人類大腦，其機率遠高於演化出整個真實宇宙。',
       category: '理論物理與高深科學',
-      hintKeyword: '熱力學漲落',
+      hintKeyword: '物理',
+      decoyKeywords: ['哲學', '心理'],
+      decoyRationales: ['名稱像思想實驗，可能被歸入哲學。', '名稱提到大腦，可能被歸入心理。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/玻尔兹曼大脑',
       dykHook: '宇宙中的大腦真的可能比整個真實宇宙更容易在虛空中隨機生成嗎？',
@@ -40,7 +44,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '維根斯坦的甲蟲',
       definition: '哲學家維根斯坦提出的思想實驗。假設每個人盒子裡都有一隻「甲蟲」，且誰也看不到別人的盒子。如果「甲蟲」指代純私密的內部感官體驗，則這個詞在人際溝通中其實根本沒有客觀指涉意義。',
       category: '哲學悖論與認識論',
-      hintKeyword: '私密語言',
+      hintKeyword: '哲學',
+      decoyKeywords: ['生物', '語言'],
+      decoyRationales: ['名稱提到甲蟲，可能被歸入生物。', '人名音譯也可能像語言學術語。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/私有语言论证',
       dykHook: null,
@@ -49,7 +55,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '綠鬍子效應',
       definition: '演化生物學假說，指利他基因如果同時能表達出顯眼的辨識標籤（如綠鬍子），並促使攜帶者只對同樣有綠鬍子的個體提供無私幫助，就能在自私的基因演化競賽中迅速擴散。',
       category: '演化生物與罕見生理機制',
-      hintKeyword: '利他偽裝',
+      hintKeyword: '生物',
+      decoyKeywords: ['民俗', '時尚'],
+      decoyRationales: ['奇特外貌名稱可能像民俗象徵。', '鬍子顏色也可能讓人想到時尚。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/绿胡子效应',
       dykHook: null,
@@ -58,7 +66,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '顫抖手均衡',
       definition: '博弈論中對納許均衡的精煉概念。考慮到玩家在做決策時可能會因為手滑或心理波動而有極微小機率「按錯鈕」，只有在面對這種極微小的擾動時依然穩健的最佳策略，才稱為顫抖手均衡。',
       category: '賽局理論與行為經濟學',
-      hintKeyword: '容錯決策',
+      hintKeyword: '賽局',
+      decoyKeywords: ['醫學', '心理'],
+      decoyRationales: ['顫抖可能被理解成醫學症狀。', '手部反應也可能被理解成心理現象。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/颤抖手完美均衡',
       dykHook: null,
@@ -67,7 +77,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '蓋梯爾問題',
       definition: '知識論著名的哲學難題。傳統哲學認為「知識就是得到證實的真實信念」，但蓋梯爾提出一系列反例，證明一個人即使擁有的信念恰好正確且有充分理由，也有可能純粹只是運氣好而巧合吻合。',
       category: '哲學悖論與認識論',
-      hintKeyword: '真理巧合',
+      hintKeyword: '哲學',
+      decoyKeywords: ['法律', '教育'],
+      decoyRationales: ['人名加問題可能像法律案例。', '也可能被誤認為教育理論。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/葛梯尔问题',
       dykHook: null,
@@ -76,7 +88,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '卡西米爾效應',
       definition: '量子場論中的宏觀物理現象。在真空中將兩塊完全不帶電的中性金屬板平行放置於微米間距，因兩板間受限的真空零點能量模式少於外側，真空漲落會對金屬板產生微小但可測量的相互吸引力。',
       category: '理論物理與高深科學',
-      hintKeyword: '虛粒子壓',
+      hintKeyword: '物理',
+      decoyKeywords: ['金融', '心理'],
+      decoyRationales: ['人名加效應可能像金融現象。', '也可能被誤認為心理效應。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/卡西米尔效应',
       dykHook: null,
@@ -85,7 +99,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '薩丕爾-沃夫假說',
       definition: '語言學與認知人類學理論，認為不同語言的文法範疇和詞彙結構會直接形塑甚至決定其說話者的思維方式、世界觀，以及對時空與因果關係的客觀認知。',
       category: '語言學與符號學',
-      hintKeyword: '語法思維',
+      hintKeyword: '語言',
+      decoyKeywords: ['生物', '哲學'],
+      decoyRationales: ['沃夫的讀音可能讓人想到生物。', '假說名稱也可能讓人猜是哲學。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/萨丕尔-沃夫假说',
       dykHook: null,
@@ -94,7 +110,9 @@ export function generateMockQuestions(count: number, existingTerms: Set<string> 
       term: '布瓦西耶效應',
       definition: '認知心理學現象，指人在極度專注於視覺資訊搜尋任務時，注意力瓶頸會導致周遭極為巨大突兀的聲音或聽覺刺激完全無法進入意識被大腦感知，彷彿暫時聽力喪失。',
       category: '認知科學與深層心理學',
-      hintKeyword: '知覺屏蔽',
+      hintKeyword: '心理',
+      decoyKeywords: ['語言', '醫學'],
+      decoyRationales: ['音譯名稱可能像語言學概念。', '效應名稱也可能被猜成醫學現象。'],
       difficulty: 3,
       sourceUrl: 'https://zh.wikipedia.org/wiki/不注意视盲',
       dykHook: null,
@@ -171,7 +189,7 @@ ${topicPriorityBlock}
    ${hasCustomTopic ? `- ★ 必須嚴格切合指定主題「${customTopic}」！` : '- 專業術語、學者人名悖論、理論假說、歷史名詞或次文化深度設定名詞。'}
    - ${existingTermsList ? `嚴格避免與現有題目重複：${existingTermsList}` : '不可重複'}。
 2. 【定義 (definition)】：
-   - 繁體中文，約 70~130 字。
+   - 繁體中文，約 45~80 字。
    - 必須深入說清楚「真實的核心機制、思想實驗內容或背後的荒謬/驚奇歷史真相」，語言具體精準，老實人可在 20 秒內理解關鍵字眼並在討論時用自己的話口述。
 3. 【提示關鍵字 (hintKeyword)】（最高優先 - 標示題目所屬的宏觀領域）：
    - 【只能填寫宏觀領域／分類名稱（固定 2 個字）】！
@@ -184,13 +202,19 @@ ${topicPriorityBlock}
        - 可填寫：天文、地理、物理、化學、生物、心理、哲學、歷史、語言、經濟、政治、數學、賽局、考古、軍事、文化、醫學、法律、藝術、科技等。
    - 【嚴格禁止】過於細節、具體或描述性的詞彙（如「選擇癱瘓」、「宇宙妄想」、「量子曙光」、「真理巧合」皆為錯誤！必須精簡為所屬 2 字宏觀領域，如「動漫」、「遊戲」、「哲學」、「物理」、「歷史」等）。
    - 【防洩底鐵律】：大部分情況下不能包含【詞彙】本身出現過的任何一個字元！（例如題目有名稱「數」則領域不可填「數學」，可改用「邏輯」；題目有「語」不可填「語言」，可改用「文化」）。
-4. 【領域分類 (category)】：
+4. 【誘餌領域 (decoyKeywords)】：
+   - 必須剛好提供兩個固定 2 字的宏觀領域，例如生物、文化、宗教、民俗、醫學、哲學、政治、歷史、藝術、科技。
+   - 只看題目名稱時，玩家應能合理懷疑它屬於這些領域；但它們不能是真正答案，也不能只是把題目拆字、同義改寫或做廉價諧音。
+   - 兩個誘餌都不得包含 term 出現過的任何字元，也不得與 hintKeyword 相同。
+5. 【誘餌理由 (decoyRationales)】：
+   - 各用一句短句說明為何名稱可能被誤認為該領域，只供編輯審核，不顯示給玩家。
+6. 【領域分類 (category)】：
    - ${categoryInstruction}
-5. 【難度 (difficulty)】：
+7. 【難度 (difficulty)】：
    - 全數標定為 3（極冷門），偶有中度冷門標 2。絕不允許出現 1。
-6. 【來源連結 (sourceUrl)】：
+8. 【來源連結 (sourceUrl)】：
    - 對應的維基百科或資料來源條目連結（如 https://zh.wikipedia.org/wiki/條目名稱）。
-7. ${topicInstruction}
+9. ${topicInstruction}
 
 請直接輸出 JSON Array，不要包含額外 markdown 標籤或對話，格式如下：
 [
@@ -199,6 +223,8 @@ ${topicPriorityBlock}
     "definition": "精確深入的真實定義與機制（70-130字）",
     "category": "分類名稱",
     "hintKeyword": "動漫/遊戲/哲學/物理等2字宏觀領域",
+    "decoyKeywords": ["生物", "文化"],
+    "decoyRationales": ["可能誤認為生物領域的原因", "可能誤認為文化領域的原因"],
     "difficulty": 3,
     "sourceUrl": "https://zh.wikipedia.org/wiki/...",
     "dykHook": null

@@ -26,7 +26,7 @@ export function RoundScreen({ game }: { game: GameApi }) {
 
   return (
     <Screen>
-      <header className="pt-2">
+      <header className="flex items-start justify-between gap-3 pt-2">
         <div>
           <div className="flex items-center gap-2">
             <Pill tone="brand">
@@ -36,6 +36,18 @@ export function RoundScreen({ game }: { game: GameApi }) {
           </div>
           <h1 className="mt-2 text-2xl font-black text-amber-300">{PHASE_LABEL[round.phase]}</h1>
         </div>
+        <button
+          type="button"
+          onClick={() => {
+            if (window.confirm('確定要離開遊戲嗎？你的座位會被移除；若你是房主，將自動交給下一位玩家。')) {
+              void game.leaveRoom();
+            }
+          }}
+          disabled={game.busy}
+          className="shrink-0 rounded-xl px-3 py-2 text-sm text-slate-300 ring-1 ring-white/12 hover:bg-white/6 disabled:opacity-35"
+        >
+          離開遊戲
+        </button>
       </header>
 
       {round.phase === 'ROLE_ASSIGN' && <RoleAssign game={game} guesserName={guesserName} />}

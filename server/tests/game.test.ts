@@ -1,6 +1,6 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Server } from 'socket.io';
-import { Question } from '../../shared/types';
+import { LIMITS, Question } from '../../shared/types';
 import { GameService } from '../src/game';
 import { InMemoryRoomStore } from '../src/store';
 
@@ -111,6 +111,87 @@ describe('GameService - 私密重連憑證', () => {
       'socket-new'
     );
     expect(rejoined.player.socketId).toBe('socket-new');
+  });
+});
+
+describe('GameService - 離線、關頁與主動離場', () => {
+  afterEach(() => vi.useRealTimers());
+
+  it('一般斷線只標為離線，不會立即移除座位', async () => {
+    vi.useFakeTimers();
+    const { game, store } = createTestHarness();
+    const { room, player: host } = await game.createRoom('Host', 'socket-host');
+
+    await game.markDisconnected(room.code, host.id, 'socket-host');
+    await vi.advanceTimersByTimeAsync((LIMITS.RECONNECT_GRACE_SECONDS + 1) * 1000);
+
+    const updated = (await store.get(room.code))!;
+    expect(updated.players).toHaveLength(1);
+    expect(updated.players[0].socketId).toBeNull();
+    expect(updated.players[0].disconnectedAt).toBeTypeOf('number');
+    game.shutdown();
+  });
+
+  it('切到背景會立即顯示離線，回到前景恢復在線但座位不變', async () => {
+    const { game, store } = createTestHarness();
+    const { room, player } = await game.createRoom('Host', 'socket-host');
+
+    await game.setPlayerVisibility(room.code, player.id, 'socket-host', false);
+    let updated = (await store.get(room.code))!;
+    expect(updated.players).toHaveLength(1);
+    expect(game.buildPublicState(updated).players[0].connected).toBe(false);
+
+    await game.setPlayerVisibility(room.code, player.id, 'socket-host', true);
+    updated = (await store.get(room.code))!;
+    expect(updated.players).toHaveLength(1);
+    expect(game.buildPublicState(updated).players[0].connected).toBe(true);
+    game.shutdown();
+  });
+
+  it('關閉分頁後移除玩家，房主離場時轉交給下一位在線玩家', async () => {
+    vi.useFakeTimers();
+    const { game, store } = createTestHarness();
+    const { room, player: host, reconnectToken } = await game.createRoom(
+      'Host',
+      'socket-host'
+    );
+    const { player: nextHost } = await game.joinRoom(room.code, 'Player2', 'socket-p2');
+    await game.joinRoom(room.code, 'Player3', 'socket-p3');
+
+    await game.schedulePageExit(room.code, host.id, reconnectToken);
+    await game.markDisconnected(room.code, host.id, 'socket-host');
+    await vi.advanceTimersByTimeAsync(LIMITS.PAGE_EXIT_GRACE_SECONDS * 1000);
+
+    const updated = (await store.get(room.code))!;
+    expect(updated.players.map((player) => player.id)).not.toContain(host.id);
+    expect(updated.hostId).toBe(nextHost.id);
+    game.shutdown();
+  });
+
+  it('重新整理後若及時接回新 socket，不會被關頁通知誤刪', async () => {
+    vi.useFakeTimers();
+    const { game, store } = createTestHarness();
+    const { room, player, reconnectToken } = await game.createRoom('Host', 'socket-old');
+
+    await game.schedulePageExit(room.code, player.id, reconnectToken);
+    await game.markDisconnected(room.code, player.id, 'socket-old');
+    await game.rejoinRoom(room.code, player.id, reconnectToken, 'socket-new');
+    await vi.advanceTimersByTimeAsync(LIMITS.PAGE_EXIT_GRACE_SECONDS * 1000);
+
+    const updated = (await store.get(room.code))!;
+    expect(updated.players).toHaveLength(1);
+    expect(updated.players[0].socketId).toBe('socket-new');
+    game.shutdown();
+  });
+
+  it('沒有正確重連憑證，不能冒充別人申請離場', async () => {
+    const { game } = createTestHarness();
+    const { room, player } = await game.createRoom('Host', 'socket-host');
+
+    await expect(
+      game.schedulePageExit(room.code, player.id, 'wrong-token')
+    ).rejects.toThrow('離場憑證無效');
+    game.shutdown();
   });
 });
 

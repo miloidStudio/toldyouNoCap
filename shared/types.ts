@@ -217,7 +217,10 @@ export interface ClientToServerEvents {
     payload: SessionCredentials,
     ack: (res: AckResult<{ code: string; playerId: string }>) => void
   ) => void;
-  'room:leave': () => void;
+  /** 主動離開房間；ack 成功代表伺服器已完成移除與房主轉移 */
+  'room:leave': (ack?: (res: AckResult<null>) => void) => void;
+  /** 頁面進入背景只更新在線狀態，不移除座位 */
+  'presence:visibility': (payload: { visible: boolean }) => void;
   'room:kick': (payload: { playerId: string }, ack: (res: AckResult<null>) => void) => void;
   'room:settings': (payload: Partial<RoomSettings>, ack: (res: AckResult<null>) => void) => void;
   'game:start': (ack: (res: AckResult<null>) => void) => void;
@@ -283,6 +286,8 @@ export const LIMITS = {
   HINT_COUNT: 3,
   /** 斷線後保留座位的秒數 */
   RECONNECT_GRACE_SECONDS: 60,
+  /** 關閉頁面通知的防誤判秒數；重新整理若及時接回，不會被當成離場 */
+  PAGE_EXIT_GRACE_SECONDS: 3,
   NAME_MAX_LENGTH: 12,
 } as const;
 
